@@ -18,7 +18,7 @@ interface SearchResult extends Coordinate {
   importance: number;
 }
 
-export default function AddressInput({ onLocationSelect, placeholder = "Enter address or place name", label }: AddressInputProps) {
+export default function AddressInput({ onLocationSelect, placeholder = "Enter address or coordinates", label }: AddressInputProps) {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
@@ -69,6 +69,19 @@ export default function AddressInput({ onLocationSelect, placeholder = "Enter ad
     const newQuery = e.target.value;
     setQuery(newQuery);
     setSelectedIndex(-1);
+
+    // Check if input looks like "lat, lon" coordinates
+    const coordMatch = newQuery.trim().match(/^(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)/);
+    if (coordMatch) {
+      const lat = parseFloat(coordMatch[1]);
+      const lng = parseFloat(coordMatch[2]);
+      if (!isNaN(lat) && !isNaN(lng)) {
+        onLocationSelect({ lat, lng });
+        setShowResults(false);
+        setResults([]);
+        return;
+      }
+    }
 
     // Clear previous timeout
     if (timeoutRef.current) {
