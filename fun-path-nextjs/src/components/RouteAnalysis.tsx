@@ -96,6 +96,26 @@ export default function RouteAnalysis({ route }: RouteAnalysisProps) {
         </CardContent>
       </Card>
 
+      {/* Node Type Distribution */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Node Type Distribution</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-2">
+          {route.stats.node_type_distribution && Object.entries(route.stats.node_type_distribution).map(([type, count]) => (
+            <div key={type} className="flex justify-between items-center">
+              <div className="flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-blue-500" />
+                <span className="font-medium capitalize">{type.replace('_', ' ')}</span>
+              </div>
+              <div className="text-sm text-muted-foreground">
+                {count} nodes
+              </div>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+
       {/* Surface Types */}
       <Card>
         <CardHeader>

@@ -61,6 +61,7 @@ class RouteStats(BaseModel):
     surface_types: Dict[str, SurfaceTypeStats]
     special_areas: Dict[str, SpecialAreaStats]
     avg_speed: float
+    node_type_distribution: Dict[str, int]
 
 class Route(BaseModel):
     name: str
@@ -109,42 +110,66 @@ def fetch_graph(start, end, buffer_dist=5000):
 
 def annotate_fun_weights(G):
     """
-    Set fun_weight attribute for each edge (same as original script)
+    Set fun_weight attribute for each edge using a more intuitive scoring model.
     """
-    print(f"[{datetime.now().strftime('%H:%M:%S')}] Calculating fun weights...")
+    print(f"[{datetime.now().strftime('%H:%M:%S')}] Calculating fun weights with new, improved model...")
     start_time = time.time()
-    
-    fun_highways = {'footway','path','pedestrian','track','steps','cycleway'}
-    fun_edges = 0
-    park_edges = 0
-    attraction_edges = 0
-    
+
+    # Define bonuses and penalties
+    highway_bonuses = {
+        'track': 4.0,       # High bonus for tracks/trails
+        'footway': 3.0,     # Good bonus for dedicated footways
+        'pedestrian': 3.0,  # and pedestrian streets
+        'path': 2.0,        # A decent bonus for generic paths
+        'cycleway': 1.5,    # A small bonus for cycleways
+        'steps': 0.9,       # Slight penalty for steps
+    }
+    # Penalties are divisors for major roads
+    highway_penalties = {
+        'primary': 3.0,
+        'secondary': 2.5,
+        'tertiary': 2.0,
+        'residential': 1.2, # Very slight penalty for residential roads
+        'service': 1.5,
+    }
+    tag_bonuses = {
+        ('leisure', 'park'): 3.0,
+        ('leisure', 'nature_reserve'): 4.0,
+        ('tourism', 'viewpoint'): 3.0,
+        ('natural', 'wood'): 2.5,
+    }
+
     for u, v, k, data in G.edges(keys=True, data=True):
+        base_score = 1.0
         hw = data.get('highway')
-        if isinstance(hw, list): hw = hw[0]
-        score = 1.0
-        if hw in fun_highways:        
-            score += 2.0
-            fun_edges += 1
-        if data.get('leisure')=='park':      
-            score += 1.5
-            park_edges += 1
-        if data.get('tourism') in ('viewpoint','attraction'): 
-            score += 3.0
-            attraction_edges += 1
-        data['fun_weight'] = data['length'] / score
-    
+        hws = hw if isinstance(hw, list) else [hw]
+
+        for h in hws:
+            if h in highway_bonuses:
+                base_score *= highway_bonuses[h]
+            elif h in highway_penalties:
+                base_score /= highway_penalties[h]
+
+        for (tag_key, tag_value), bonus in tag_bonuses.items():
+            tag_val = data.get(tag_key)
+            if (isinstance(tag_val, list) and tag_value in tag_val) or (tag_val == tag_value):
+                base_score += bonus
+
+        # Final fun_weight is length divided by the fun score
+        # A higher score means a lower weight, making it more likely to be chosen
+        data['fun_weight'] = data['length'] / max(base_score, 0.1)
+
     elapsed = time.time() - start_time
     print(f"[{datetime.now().strftime('%H:%M:%S')}] Fun weights calculated in {elapsed:.2f}s")
-    print(f"[{datetime.now().strftime('%H:%M:%S')}] Found {fun_edges} fun paths, {park_edges} park edges, {attraction_edges} attractions")
 
 def calculate_detailed_route_stats(G, route):
     """
-    Calculate detailed route statistics (simplified version)
+    Calculate detailed route statistics, including node type distribution.
     """
     total_distance = 0
     total_fun_weight = 0
-    
+    node_type_counts = {}
+
     # Basic path types
     path_types = {
         'footway': {'distance': 0, 'time': 0, 'speed': 4.5, 'description': 'Dedicated walkways'},
@@ -161,6 +186,29 @@ def calculate_detailed_route_stats(G, route):
     
     special_areas = {}
     
+    # Count node types
+    for node_id in route:
+        # To get the 'type' of a node, we check the highway tags of its connected edges.
+        # This is a simplification; a node at an intersection has multiple edge types.
+        # We'll count the dominant highway type for simplicity.
+        if G.has_node(node_id):
+            incident_edges = G.edges(node_id, data=True)
+            if incident_edges:
+                # Get highway types from all connected edges
+                hws = [d.get('highway') for u,v,d in incident_edges]
+                # Flatten the list in case some are lists themselves
+                hws_flat = []
+                for hw in hws:
+                    if isinstance(hw, list):
+                        hws_flat.extend(hw)
+                    else:
+                        hws_flat.append(hw)
+                
+                # Count the most common highway type for this node
+                if hws_flat:
+                    dominant_hw = max(set(hws_flat), key=hws_flat.count)
+                    node_type_counts[dominant_hw] = node_type_counts.get(dominant_hw, 0) + 1
+
     for i in range(len(route) - 1):
         u, v = route[i], route[i + 1]
         edge_data = G.get_edge_data(u, v)
@@ -170,25 +218,21 @@ def calculate_detailed_route_stats(G, route):
             total_distance += length
             total_fun_weight += edge.get('fun_weight', length)
             
-            # Analyze path type
             hw = edge.get('highway', 'other')
             if isinstance(hw, list): hw = hw[0]
             path_type = hw if hw in path_types else 'other'
             
-            # Calculate time for this segment
             base_speed = path_types[path_type]['speed']
-            segment_time = (length / 1000) * (60 / base_speed)  # minutes
+            segment_time = (length / 1000) * (60 / base_speed)
             
             path_types[path_type]['distance'] += length
             path_types[path_type]['time'] += segment_time
             
-            # Assume mostly paved for simplicity
             surface_types['paved']['distance'] += length * 0.7
             surface_types['paved']['time'] += segment_time * 0.7
             surface_types['unpaved']['distance'] += length * 0.3
             surface_types['unpaved']['time'] += segment_time * 0.3
             
-            # Check for special areas
             if edge.get('leisure') == 'park':
                 if 'park' not in special_areas:
                     special_areas['park'] = {'distance': 0, 'time': 0, 'description': 'Parks and green areas'}
@@ -196,8 +240,7 @@ def calculate_detailed_route_stats(G, route):
                 special_areas['park']['time'] += segment_time
     
     total_time = sum(data['time'] for data in path_types.values() if data['time'] > 0)
-    if total_time == 0:
-        total_time = total_distance / 1000 * (60 / 4.2)  # fallback calculation
+    if total_time == 0: total_time = total_distance / 1000 * (60 / 4.2)
     
     return {
         'distance': total_distance,
@@ -208,7 +251,8 @@ def calculate_detailed_route_stats(G, route):
         'path_types': path_types,
         'surface_types': surface_types,
         'special_areas': special_areas,
-        'avg_speed': (total_distance / 1000) / (total_time / 60) if total_time > 0 else 4.2
+        'avg_speed': (total_distance / 1000) / (total_time / 60) if total_time > 0 else 4.2,
+        'node_type_distribution': node_type_counts
     }
 
 def compute_multiple_routes(start: Coordinate, end: Coordinate, buffer_dist: int = 5000):
@@ -219,6 +263,7 @@ def compute_multiple_routes(start: Coordinate, end: Coordinate, buffer_dist: int
     total_start = time.time()
     
     G = fetch_graph(start, end, buffer_dist)
+    annotate_fun_weights(G) # Annotate graph before any pathfinding
     
     # Find nearest nodes
     orig = ox.distance.nearest_nodes(G, X=start.lng, Y=start.lat)
@@ -464,6 +509,43 @@ async def search_addresses_endpoint(request: AddressSearchRequest):
         print(f"[{datetime.now().strftime('%H:%M:%S')}] Address search error: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Address search failed: {str(e)}")
 
+@app.get("/api/debug-node-details")
+async def debug_node_details():
+    """
+    Temporary endpoint to get debug information for a sample node and its edges.
+    """
+    try:
+        sample_point = (58.54, 15.03)
+        G = ox.graph_from_point(sample_point, dist=500, network_type='walk', simplify=True)
+        
+        node_ids = list(G.nodes)
+        if not node_ids:
+            return {"error": "Could not fetch any nodes."}
+
+        sample_node_id = node_ids[0]
+        node_data = G.nodes[sample_node_id]
+        
+        incident_edges = list(G.in_edges(sample_node_id, data=True)) + list(G.out_edges(sample_node_id, data=True))
+        
+        edge_details = []
+        for u, v, data in incident_edges:
+            # Sanitize edge data to ensure it's JSON serializable
+            sanitized_data = {k: str(v) for k, v in data.items()}
+            edge_info = {
+                "from_node": u,
+                "to_node": v,
+                "data": sanitized_data
+            }
+            edge_details.append(edge_info)
+
+        return {
+            "node_id": sample_node_id, 
+            "node_data": node_data,
+            "connected_edges": edge_details
+        }
+    except Exception as e:
+        return {"error": str(e)}
+
 @app.post("/api/routes", response_model=RouteResponse)
 async def calculate_routes(request: RouteRequest):
     """
@@ -509,7 +591,8 @@ async def calculate_routes(request: RouteRequest):
                 path_types=path_types,
                 surface_types=surface_types,
                 special_areas=special_areas,
-                avg_speed=stats_dict['avg_speed']
+                avg_speed=stats_dict['avg_speed'],
+                node_type_distribution=stats_dict.get('node_type_distribution', {})
             )
             
             route = Route(

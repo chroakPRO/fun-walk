@@ -39,11 +39,11 @@ export interface RouteStats {
   fun_score: number;
   estimated_time: number;
   waypoints: number;
-  path_types: Record<string, PathTypeStats>;
-  surface_types: Record<string, SurfaceTypeStats>;
-  special_areas: Record<string, SpecialAreaStats>;
-  segments: RouteSegment[];
+  path_types: { [key: string]: PathTypeStats };
+  surface_types: { [key: string]: SurfaceTypeStats };
+  special_areas: { [key: string]: SpecialAreaStats };
   avg_speed: number;
+  node_type_distribution: { [key: string]: number };
 }
 
 export interface Route {
