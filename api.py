@@ -33,6 +33,7 @@ class RouteRequest(BaseModel):
     start: Coordinate
     end: Coordinate
     buffer_dist: Optional[int] = 5000
+    max_time: Optional[int] = 30
 
 class PathTypeStats(BaseModel):
     distance: float
@@ -130,11 +131,11 @@ def annotate_fun_weights(G):
         'primary': 3.0,
         'secondary': 2.5,
         'tertiary': 2.0,
-        'residential': 1.2, # Very slight penalty for residential roads
+        'residential': 2.0, # Penalize residential roads more strongly
         'service': 1.5,
     }
     tag_bonuses = {
-        ('leisure', 'park'): 3.0,
+        ('leisure', 'park'): 4.0,
         ('leisure', 'nature_reserve'): 4.0,
         ('tourism', 'viewpoint'): 3.0,
         ('natural', 'wood'): 2.5,
@@ -259,7 +260,7 @@ def calculate_detailed_route_stats(G, route):
         'node_type_distribution': node_type_counts
     }
 
-def compute_multiple_routes(start: Coordinate, end: Coordinate, buffer_dist: int = 5000):
+def compute_multiple_routes(start: Coordinate, end: Coordinate, buffer_dist: int = 5000, max_time_minutes: int = 30):
     """
     Compute multiple routes with different optimization strategies
     """
@@ -304,6 +305,14 @@ def compute_multiple_routes(start: Coordinate, end: Coordinate, buffer_dist: int
     try:
         route_fun = nx.shortest_path(G, orig, dest, weight='fun_weight')
         stats = calculate_detailed_route_stats(G, route_fun)
+        if stats['estimated_time'] > max_time_minutes:
+            print(f"[{datetime.now().strftime('%H:%M:%S')}] Fun route {stats['estimated_time']:.1f}min exceeds {max_time_minutes}min, using balanced weight")
+            for u, v, k, data in G.edges(keys=True, data=True):
+                fun_weight = data.get('fun_weight', data.get('length', 0))
+                length = data.get('length', 0)
+                data['balanced_weight'] = (length * 0.7) + (fun_weight * 0.3)
+            route_fun = nx.shortest_path(G, orig, dest, weight='balanced_weight')
+            stats = calculate_detailed_route_stats(G, route_fun)
         
         # Convert to coordinates
         coordinates = []
@@ -558,7 +567,7 @@ async def calculate_routes(request: RouteRequest):
     try:
         print(f"[{datetime.now().strftime('%H:%M:%S')}] Route request: {request.start} -> {request.end}")
         
-        routes_data = compute_multiple_routes(request.start, request.end, request.buffer_dist)
+        routes_data = compute_multiple_routes(request.start, request.end, request.buffer_dist, request.max_time)
         
         if not routes_data:
             raise HTTPException(status_code=404, detail="No routes found")

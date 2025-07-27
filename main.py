@@ -44,8 +44,8 @@ def annotate_fun_weights(G):
         if hw in fun_highways:        
             score += 2.0
             fun_edges += 1
-        if data.get('leisure')=='park':      
-            score += 1.5
+        if data.get('leisure')=='park':
+            score += park_bonus
             park_edges += 1
         if data.get('tourism') in ('viewpoint','attraction'):
             score += 3.0
@@ -59,7 +59,7 @@ def annotate_fun_weights(G):
     print(f"[{datetime.now().strftime('%H:%M:%S')}] Fun weights calculated in {elapsed:.2f}s")
     print(f"[{datetime.now().strftime('%H:%M:%S')}] Found {fun_edges} fun paths, {park_edges} park edges, {attraction_edges} attractions")
 
-def compute_fun_route(start, end, buffer_dist=5000):
+def compute_fun_route(start, end, buffer_dist=5000, max_time_minutes=30):
     """
     Returnerar routen (lista av noder) och grafen G.
     """
@@ -77,6 +77,15 @@ def compute_fun_route(start, end, buffer_dist=5000):
     route_start = time.time()
     route = nx.shortest_path(G, orig, dest, weight='fun_weight')
     route_time = time.time() - route_start
+    stats = calculate_detailed_route_stats(G, route)
+    if stats['estimated_time'] > max_time_minutes:
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] Fun route {stats['estimated_time']:.1f}min exceeds {max_time_minutes}min, using balanced weight")
+        for u, v, k, data in G.edges(keys=True, data=True):
+            fun_weight = data.get('fun_weight', data.get('length', 0))
+            length = data.get('length', 0)
+            data['balanced_weight'] = (length * 0.7) + (fun_weight * 0.3)
+        route = nx.shortest_path(G, orig, dest, weight='balanced_weight')
+        stats = calculate_detailed_route_stats(G, route)
     
     total_time = time.time() - total_start
     print(f"[{datetime.now().strftime('%H:%M:%S')}] Route computed in {route_time:.2f}s (total: {total_time:.2f}s)")
@@ -388,7 +397,7 @@ def calculate_detailed_route_stats(G, route):
         'avg_speed': (total_distance / 1000) / (total_time / 60) if total_time > 0 else 0
     }
 
-def compute_multiple_routes(start, end, buffer_dist=5000):
+def compute_multiple_routes(start, end, buffer_dist=5000, max_time_minutes=30):
     """
     Beräknar flera rutter med olika optimeringsstrategier.
     """
@@ -425,6 +434,14 @@ def compute_multiple_routes(start, end, buffer_dist=5000):
     try:
         route_fun = nx.shortest_path(G, orig, dest, weight='fun_weight')
         stats = calculate_detailed_route_stats(G, route_fun)
+        if stats['estimated_time'] > max_time_minutes:
+            print(f"[{datetime.now().strftime('%H:%M:%S')}] Fun route {stats['estimated_time']:.1f}min exceeds {max_time_minutes}min, using balanced weight")
+            for u, v, k, data in G.edges(keys=True, data=True):
+                fun_weight = data.get('fun_weight', data.get('length', 0))
+                length = data.get('length', 0)
+                data['balanced_weight'] = (length * 0.7) + (fun_weight * 0.3)
+            route_fun = nx.shortest_path(G, orig, dest, weight='balanced_weight')
+            stats = calculate_detailed_route_stats(G, route_fun)
         routes.append({
             'name': 'MOST_FUN',
             'description': 'Maximum fun score route',
