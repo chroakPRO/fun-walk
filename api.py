@@ -124,6 +124,7 @@ def annotate_fun_weights(G):
         'cycleway': 1.5,    # A small bonus for cycleways
         'steps': 0.9,       # Slight penalty for steps
     }
+    path_penalty_factor = 3.0  # Heavily penalize generic 'path' ways
     # Penalties are divisors for major roads
     highway_penalties = {
         'primary': 3.0,
@@ -157,7 +158,10 @@ def annotate_fun_weights(G):
 
         # Final fun_weight is length divided by the fun score
         # A higher score means a lower weight, making it more likely to be chosen
-        data['fun_weight'] = data['length'] / max(base_score, 0.1)
+        weight = data['length'] / max(base_score, 0.1)
+        if 'path' in hws:
+            weight *= path_penalty_factor
+        data['fun_weight'] = weight
 
     elapsed = time.time() - start_time
     print(f"[{datetime.now().strftime('%H:%M:%S')}] Fun weights calculated in {elapsed:.2f}s")

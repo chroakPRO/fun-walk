@@ -32,6 +32,7 @@ def annotate_fun_weights(G):
     start_time = time.time()
     
     fun_highways = {'footway','path','pedestrian','track','steps','cycleway'}
+    path_penalty_factor = 3.0  # Heavily penalize generic 'path' ways
     fun_edges = 0
     park_edges = 0
     attraction_edges = 0
@@ -46,10 +47,13 @@ def annotate_fun_weights(G):
         if data.get('leisure')=='park':      
             score += 1.5
             park_edges += 1
-        if data.get('tourism') in ('viewpoint','attraction'): 
+        if data.get('tourism') in ('viewpoint','attraction'):
             score += 3.0
             attraction_edges += 1
-        data['fun_weight'] = data['length'] / score
+        weight = data['length'] / score
+        if hw == 'path':
+            weight *= path_penalty_factor
+        data['fun_weight'] = weight
     
     elapsed = time.time() - start_time
     print(f"[{datetime.now().strftime('%H:%M:%S')}] Fun weights calculated in {elapsed:.2f}s")
