@@ -126,7 +126,6 @@ def annotate_fun_weights(G):
         'steps': 0.9,       # Slight penalty for steps
     }
     path_penalty_factor = 3.0  # Heavily penalize generic 'path' ways
-    residential_penalty_factor = 2.0  # Penalize residential roads
     # Penalties are divisors for major roads
     highway_penalties = {
         'primary': 3.0,
@@ -163,8 +162,6 @@ def annotate_fun_weights(G):
         weight = data['length'] / max(base_score, 0.1)
         if 'path' in hws:
             weight *= path_penalty_factor
-        if 'residential' in hws:
-            weight *= residential_penalty_factor
         data['fun_weight'] = weight
 
     elapsed = time.time() - start_time
