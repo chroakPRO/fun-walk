@@ -16,6 +16,8 @@ import { MapPin, Navigation, Loader2, MapIcon } from 'lucide-react';
 export default function ClientApp() {
   const [start, setStart] = useState<Coordinate>({ lat: 58.508594, lng: 15.487358 });
   const [end, setEnd] = useState<Coordinate>({ lat: 58.490666, lng: 15.498153 });
+  const [startInput, setStartInput] = useState<string>(`${58.508594}, ${15.487358}`);
+  const [endInput, setEndInput] = useState<string>(`${58.490666}, ${15.498153}`);
   const [routes, setRoutes] = useState<Route[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -43,6 +45,15 @@ export default function ClientApp() {
       }
     }
   }, []);
+
+  // Keep coordinate input fields in sync when start/end change
+  useEffect(() => {
+    setStartInput(`${start.lat}, ${start.lng}`);
+  }, [start]);
+
+  useEffect(() => {
+    setEndInput(`${end.lat}, ${end.lng}`);
+  }, [end]);
 
   const calculateRoutes = async () => {
     setLoading(true);
@@ -127,22 +138,22 @@ export default function ClientApp() {
                     placeholder="Enter start address or coordinates"
                     onLocationSelect={setStart}
                   />
-                  <div className="grid grid-cols-2 gap-2">
-                    <Input
-                      type="number"
-                      step="any"
-                      placeholder="Latitude"
-                      value={start.lat}
-                      onChange={(e) => setStart(prev => ({ ...prev, lat: parseFloat(e.target.value) || 0 }))}
-                    />
-                    <Input
-                      type="number"
-                      step="any"
-                      placeholder="Longitude"
-                      value={start.lng}
-                      onChange={(e) => setStart(prev => ({ ...prev, lng: parseFloat(e.target.value) || 0 }))}
-                    />
-                  </div>
+                  <Input
+                    placeholder="Latitude, Longitude"
+                    value={startInput}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setStartInput(value);
+                      const parts = value.split(/[,\s]+/).map(p => p.trim());
+                      if (parts.length >= 2) {
+                        const lat = parseFloat(parts[0]);
+                        const lng = parseFloat(parts[1]);
+                        if (!isNaN(lat) && !isNaN(lng)) {
+                          setStart({ lat, lng });
+                        }
+                      }
+                    }}
+                  />
                   <Button 
                     variant="outline" 
                     size="sm" 
@@ -160,22 +171,22 @@ export default function ClientApp() {
                     placeholder="Enter destination address or coordinates"
                     onLocationSelect={setEnd}
                   />
-                  <div className="grid grid-cols-2 gap-2">
-                    <Input
-                      type="number"
-                      step="any"
-                      placeholder="Latitude"
-                      value={end.lat}
-                      onChange={(e) => setEnd(prev => ({ ...prev, lat: parseFloat(e.target.value) || 0 }))}
-                    />
-                    <Input
-                      type="number"
-                      step="any"
-                      placeholder="Longitude"
-                      value={end.lng}
-                      onChange={(e) => setEnd(prev => ({ ...prev, lng: parseFloat(e.target.value) || 0 }))}
-                    />
-                  </div>
+                  <Input
+                    placeholder="Latitude, Longitude"
+                    value={endInput}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setEndInput(value);
+                      const parts = value.split(/[,\s]+/).map(p => p.trim());
+                      if (parts.length >= 2) {
+                        const lat = parseFloat(parts[0]);
+                        const lng = parseFloat(parts[1]);
+                        if (!isNaN(lat) && !isNaN(lng)) {
+                          setEnd({ lat, lng });
+                        }
+                      }
+                    }}
+                  />
                 </div>
 
                 {/* Calculate button */}
