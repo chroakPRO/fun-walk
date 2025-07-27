@@ -66,7 +66,7 @@ class RouteStats(BaseModel):
 class Route(BaseModel):
     name: str
     description: str
-    coordinates: List[Coordinate]
+    route: List[Coordinate]  # Changed from 'coordinates' to 'route' to match frontend
     stats: RouteStats
     color: str
     priority: str
@@ -259,9 +259,210 @@ def calculate_detailed_route_stats(G, route):
         'node_type_distribution': node_type_counts
     }
 
+def scan_for_nature_features(G):
+    """
+    Scan all nodes and edges for parks, nature areas, and fun features
+    """
+    print(f"[{datetime.now().strftime('%H:%M:%S')}] Scanning for parks and nature features...")
+    
+    nature_nodes = []
+    nature_edges = []
+    
+    # Scan edges for nature features
+    for u, v, k, data in G.edges(keys=True, data=True):
+        score = 0
+        tags = []
+        
+        # Check for nature/park tags
+        if data.get('leisure') == 'park':
+            score += 5.0
+            tags.append('park')
+        if data.get('leisure') == 'nature_reserve':
+            score += 6.0
+            tags.append('nature_reserve')
+        if data.get('natural') == 'wood':
+            score += 4.0
+            tags.append('forest')
+        if data.get('landuse') == 'forest':
+            score += 4.0
+            tags.append('forest')
+        if data.get('tourism') == 'viewpoint':
+            score += 5.0
+            tags.append('viewpoint')
+        if data.get('highway') == 'footway':
+            score += 2.0
+            tags.append('footway')
+        if data.get('highway') == 'track':
+            score += 3.0
+            tags.append('trail')
+        if data.get('highway') == 'pedestrian':
+            score += 2.5
+            tags.append('pedestrian')
+        if data.get('waterway'):
+            score += 3.0
+            tags.append('waterway')
+        
+        # Penalize generic paths as requested
+        if data.get('highway') == 'path':
+            score -= 2.0
+            tags.append('generic_path')
+            
+        if score > 0:
+            nature_edges.append({
+                'edge': (u, v, k),
+                'score': score,
+                'tags': tags,
+                'length': data.get('length', 0)
+            })
+    
+    # Scan nodes for nature features by checking their connected edges
+    for node_id, node_data in G.nodes(data=True):
+        score = 0
+        tags = []
+        
+        # Check connected edges for nature features
+        connected_edges = list(G.edges(node_id, data=True))
+        for _, _, edge_data in connected_edges:
+            if edge_data.get('leisure') == 'park':
+                score += 3.0  # Higher score for park nodes
+                if 'park' not in tags:
+                    tags.append('park')
+            if edge_data.get('natural') == 'wood' or edge_data.get('landuse') == 'forest':
+                score += 2.0  # Forest nodes
+                if 'forest' not in tags:
+                    tags.append('forest')
+            if edge_data.get('highway') == 'footway':
+                score += 1.0  # Footway nodes
+                if 'footway' not in tags:
+                    tags.append('footway')
+            if edge_data.get('highway') == 'track':
+                score += 1.5  # Trail nodes
+                if 'trail' not in tags:
+                    tags.append('trail')
+            if edge_data.get('tourism') == 'viewpoint':
+                score += 4.0  # Viewpoint nodes
+                if 'viewpoint' not in tags:
+                    tags.append('viewpoint')
+        
+        # Also check the node itself for any tags
+        if node_data.get('leisure') == 'park':
+            score += 5.0
+            if 'park' not in tags:
+                tags.append('park')
+        if node_data.get('natural') == 'wood':
+            score += 3.0
+            if 'forest' not in tags:
+                tags.append('forest')
+        if node_data.get('tourism') == 'viewpoint':
+            score += 5.0
+            if 'viewpoint' not in tags:
+                tags.append('viewpoint')
+        
+        if score > 0:
+            nature_nodes.append({
+                'node': node_id,
+                'score': score,
+                'tags': tags,
+                'lat': node_data['y'],
+                'lng': node_data['x']
+            })
+    
+    print(f"[{datetime.now().strftime('%H:%M:%S')}] Found {len(nature_edges)} nature edges and {len(nature_nodes)} nature nodes")
+    return {'nodes': nature_nodes, 'edges': nature_edges}
+
+def filter_viable_parks(nature_features, start_node, end_node, G, max_detour_factor=1.8):
+    """
+    Filter parks that are viable waypoints (not too far from direct route)
+    """
+    try:
+        direct_distance = nx.shortest_path_length(G, start_node, end_node, weight='length')
+    except nx.NetworkXNoPath:
+        return []
+    
+    max_detour_distance = direct_distance * max_detour_factor
+    viable_parks = []
+    
+    # Group nature nodes by location proximity
+    park_clusters = []
+    processed_nodes = set()
+    
+    for feature in nature_features['nodes']:
+        if feature['node'] in processed_nodes:
+            continue
+            
+        try:
+            # Calculate total distance: start -> park -> end
+            dist_to_park = nx.shortest_path_length(G, start_node, feature['node'], weight='length')
+            dist_from_park = nx.shortest_path_length(G, feature['node'], end_node, weight='length')
+            total_distance = dist_to_park + dist_from_park
+            
+            if total_distance <= max_detour_distance:
+                park_clusters.append({
+                    'node': feature['node'],
+                    'score': feature['score'],
+                    'tags': feature['tags'],
+                    'detour_factor': total_distance / direct_distance,
+                    'lat': feature['lat'],
+                    'lng': feature['lng']
+                })
+                processed_nodes.add(feature['node'])
+                
+        except nx.NetworkXNoPath:
+            continue
+    
+    # Sort by score and limit to best parks
+    park_clusters.sort(key=lambda x: x['score'] / x['detour_factor'], reverse=True)
+    viable_parks = park_clusters[:3]  # Top 3 parks
+    
+    print(f"[{datetime.now().strftime('%H:%M:%S')}] Found {len(viable_parks)} viable parks for routing")
+    return viable_parks
+
+def create_park_route(G, start_node, end_node, viable_parks):
+    """
+    Create route that goes through selected parks
+    """
+    if not viable_parks:
+        return None
+    
+    # Select best parks based on score and detour
+    selected_parks = []
+    
+    # Always include the highest scoring park
+    if viable_parks:
+        selected_parks.append(viable_parks[0])
+    
+    # Add second park if it's significantly different location and good score
+    if len(viable_parks) > 1:
+        first_park = viable_parks[0]
+        for park in viable_parks[1:]:
+            # Check if park is far enough from first park
+            park_distance = ((park['lat'] - first_park['lat'])**2 + (park['lng'] - first_park['lng'])**2)**0.5
+            if park_distance > 0.001 and park['score'] > 2.0:  # Different location and good score
+                selected_parks.append(park)
+                break
+    
+    # Create waypoint route
+    waypoints = [start_node] + [park['node'] for park in selected_parks] + [end_node]
+    full_route = []
+    
+    print(f"[{datetime.now().strftime('%H:%M:%S')}] Creating route through {len(selected_parks)} parks...")
+    
+    # Connect waypoints
+    for i in range(len(waypoints) - 1):
+        try:
+            segment = nx.shortest_path(G, waypoints[i], waypoints[i+1], weight='fun_weight')
+            if i > 0:
+                segment = segment[1:]  # Remove duplicate node
+            full_route.extend(segment)
+        except nx.NetworkXNoPath:
+            print(f"[{datetime.now().strftime('%H:%M:%S')}] Could not connect waypoint {i} to {i+1}")
+            return None
+    
+    return full_route
+
 def compute_multiple_routes(start: Coordinate, end: Coordinate, buffer_dist: int = 5000):
     """
-    Compute multiple routes with different optimization strategies
+    Compute multiple routes with different optimization strategies including park-hunting
     """
     print(f"[{datetime.now().strftime('%H:%M:%S')}] Computing multiple route options...")
     total_start = time.time()
@@ -300,7 +501,6 @@ def compute_multiple_routes(start: Coordinate, end: Coordinate, buffer_dist: int
     
     # 2. Most fun route (fun_weight)
     print(f"[{datetime.now().strftime('%H:%M:%S')}] Computing most fun route...")
-    annotate_fun_weights(G)
     try:
         route_fun = nx.shortest_path(G, orig, dest, weight='fun_weight')
         stats = calculate_detailed_route_stats(G, route_fun)
@@ -322,7 +522,36 @@ def compute_multiple_routes(start: Coordinate, end: Coordinate, buffer_dist: int
     except nx.NetworkXNoPath:
         print(f"[{datetime.now().strftime('%H:%M:%S')}] No fun path found")
     
-    # 3. Balanced route
+    # 3. NEW: Park Hunter route
+    print(f"[{datetime.now().strftime('%H:%M:%S')}] Computing park hunter route...")
+    try:
+        nature_features = scan_for_nature_features(G)
+        viable_parks = filter_viable_parks(nature_features, orig, dest, G)
+        route_parks = create_park_route(G, orig, dest, viable_parks)
+        
+        if route_parks and len(route_parks) > 2:
+            stats = calculate_detailed_route_stats(G, route_parks)
+            
+            # Convert to coordinates
+            coordinates = []
+            for node_id in route_parks:
+                node = G.nodes[node_id]
+                coordinates.append(Coordinate(lat=node['y'], lng=node['x']))
+            
+            routes.append({
+                'name': 'PARK_HUNTER',
+                'description': f'Route through {len(viable_parks)} parks and nature areas',
+                'coordinates': coordinates,
+                'stats': stats,
+                'color': '#00aa00',
+                'priority': 'park'
+            })
+        else:
+            print(f"[{datetime.now().strftime('%H:%M:%S')}] No viable park route found")
+    except Exception as e:
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] Park hunter route failed: {str(e)}")
+    
+    # 4. Balanced route
     print(f"[{datetime.now().strftime('%H:%M:%S')}] Computing balanced route...")
     for u, v, k, data in G.edges(keys=True, data=True):
         fun_weight = data.get('fun_weight', data.get('length', 0))
@@ -602,7 +831,7 @@ async def calculate_routes(request: RouteRequest):
             route = Route(
                 name=route_data['name'],
                 description=route_data['description'],
-                coordinates=route_data['coordinates'],
+                route=route_data['coordinates'],  # Frontend expects 'route', not 'coordinates'
                 stats=stats,
                 color=route_data['color'],
                 priority=route_data['priority']

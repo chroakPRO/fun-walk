@@ -87,6 +87,9 @@ export default function RouteMap({ routes, start, end, className = '' }: RouteMa
         weight = 3;
       } else if (route.name === 'MOST_FUN') {
         weight = 5;
+      } else if (route.name === 'PARK_HUNTER') {
+        dashArray = '8,4,2,4';  // Distinctive dash pattern for park routes
+        weight = 6;             // Thicker line to emphasize park routes
       } else {
         dashArray = '15,10,5,10';
       }

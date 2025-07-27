@@ -52,7 +52,7 @@ export interface Route {
   route: Coordinate[];
   stats: RouteStats;
   color: string;
-  priority: 'speed' | 'fun' | 'balanced';
+  priority: 'speed' | 'fun' | 'balanced' | 'park';
 }
 
 export interface RouteRequest {

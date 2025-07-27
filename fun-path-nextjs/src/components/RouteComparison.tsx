@@ -37,7 +37,10 @@ export default function RouteComparison({ routes }: RouteComparisonProps) {
                 className="w-3 h-3 rounded-sm" 
                 style={{ backgroundColor: route.color }}
               />
-              <span className="text-yellow-400">{route.name}</span>
+              <span className="text-yellow-400">
+                {route.name}
+                {route.name === 'PARK_HUNTER' && <span className="ml-1">🌲</span>}
+              </span>
               <span>TIME: {formatTime(route.stats.estimated_time)} | DIST: {formatDistance(route.stats.distance)}</span>
               <span className="text-orange-400">FUN: {route.stats.fun_score.toFixed(2)}</span>
             </div>

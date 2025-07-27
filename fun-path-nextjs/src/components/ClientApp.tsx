@@ -256,6 +256,9 @@ export default function ClientApp() {
                             style={{ backgroundColor: route.color }}
                           />
                           {route.name}
+                          {route.name === 'PARK_HUNTER' && (
+                            <span className="ml-2 text-green-600 text-xs">🌲</span>
+                          )}
                         </Button>
                       ))}
                     </div>

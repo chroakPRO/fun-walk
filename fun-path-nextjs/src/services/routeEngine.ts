@@ -35,14 +35,14 @@ export class RouteEngine {
       const routes: Route[] = data.routes.map((route: {
         name: string;
         description: string;
-        coordinates: Array<{lat: number; lng: number}>;
+        route: Array<{lat: number; lng: number}>;  // Backend now sends 'route', not 'coordinates'
         stats: Record<string, unknown>;
         color: string;
         priority: string;
       }) => ({
         name: route.name,
         description: route.description,
-        route: route.coordinates.map((coord: {lat: number; lng: number}) => ({ lat: coord.lat, lng: coord.lng })),
+        route: route.route.map((coord: {lat: number; lng: number}) => ({ lat: coord.lat, lng: coord.lng })),
         stats: route.stats,
         color: route.color,
         priority: route.priority
