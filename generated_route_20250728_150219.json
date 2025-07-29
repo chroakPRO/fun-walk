@@ -1,0 +1,649 @@
+{
+  "route_type": "direct_time_constrained",
+  "coordinates": [
+    {
+      "lat": 40.7249368,
+      "lng": -73.9901791
+    },
+    {
+      "lat": 40.7254749,
+      "lng": -73.9897894
+    },
+    {
+      "lat": 40.7255843,
+      "lng": -73.9897099
+    },
+    {
+      "lat": 40.7260816,
+      "lng": -73.989348
+    },
+    {
+      "lat": 40.7261856,
+      "lng": -73.989269
+    },
+    {
+      "lat": 40.7266804,
+      "lng": -73.9889096
+    },
+    {
+      "lat": 40.726797,
+      "lng": -73.9888259
+    },
+    {
+      "lat": 40.7273003,
+      "lng": -73.9884622
+    },
+    {
+      "lat": 40.7274088,
+      "lng": -73.9883824
+    },
+    {
+      "lat": 40.7278774,
+      "lng": -73.9880354
+    },
+    {
+      "lat": 40.7279905,
+      "lng": -73.9879524
+    },
+    {
+      "lat": 40.7284939,
+      "lng": -73.9875938
+    },
+    {
+      "lat": 40.7286087,
+      "lng": -73.9875135
+    },
+    {
+      "lat": 40.729081,
+      "lng": -73.9871639
+    },
+    {
+      "lat": 40.7291977,
+      "lng": -73.9870848
+    },
+    {
+      "lat": 40.7296759,
+      "lng": -73.9867279
+    },
+    {
+      "lat": 40.7297818,
+      "lng": -73.9866368
+    },
+    {
+      "lat": 40.7302724,
+      "lng": -73.9862986
+    },
+    {
+      "lat": 40.7303854,
+      "lng": -73.9862165
+    },
+    {
+      "lat": 40.7309113,
+      "lng": -73.985825
+    },
+    {
+      "lat": 40.7310167,
+      "lng": -73.9857463
+    },
+    {
+      "lat": 40.7315505,
+      "lng": -73.9853513
+    },
+    {
+      "lat": 40.7316645,
+      "lng": -73.9852843
+    },
+    {
+      "lat": 40.7322078,
+      "lng": -73.9848866
+    },
+    {
+      "lat": 40.7323086,
+      "lng": -73.9848111
+    },
+    {
+      "lat": 40.7323813,
+      "lng": -73.9847567
+    },
+    {
+      "lat": 40.7329318,
+      "lng": -73.9843624
+    },
+    {
+      "lat": 40.7330482,
+      "lng": -73.9842792
+    },
+    {
+      "lat": 40.7336342,
+      "lng": -73.9838682
+    },
+    {
+      "lat": 40.7337253,
+      "lng": -73.9840973
+    },
+    {
+      "lat": 40.734257,
+      "lng": -73.9837103
+    },
+    {
+      "lat": 40.7343737,
+      "lng": -73.9836234
+    },
+    {
+      "lat": 40.7348435,
+      "lng": -73.9832837
+    },
+    {
+      "lat": 40.7355418,
+      "lng": -73.9849368
+    },
+    {
+      "lat": 40.7354477,
+      "lng": -73.9850042
+    }
+  ],
+  "nodes": [
+    13031200407,
+    7977873341,
+    7977873342,
+    7977873351,
+    7977873352,
+    7977873362,
+    7977873359,
+    8309479216,
+    8309479217,
+    8309479210,
+    8309479211,
+    11890003843,
+    11890003841,
+    8309479237,
+    8309479240,
+    8309479273,
+    8309479270,
+    8309479266,
+    8309479265,
+    8309479593,
+    8309479584,
+    8309479583,
+    8309479573,
+    8309479574,
+    8309479680,
+    8309479678,
+    8310246159,
+    4191926878,
+    4191929646,
+    4191929645,
+    4191926879,
+    4191926876,
+    9679181080,
+    9679181068,
+    5282642710
+  ],
+  "distance_meters": 1439.0,
+  "time_minutes": 19.2,
+  "waypoints": 35,
+  "pois_along_route": 501,
+  "poi_categories": {
+    "other": 202,
+    "fast_food": 30,
+    "restaurants": 72,
+    "shops": 127,
+    "nature": 11,
+    "bars_pubs": 35,
+    "cafes": 22,
+    "recreation": 2
+  },
+  "detailed_pois": [
+    {
+      "osm_id": 419361239,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "amenity": "bicycle_parking",
+        "capacity": "2",
+        "cityracks.housenum": "32",
+        "cityracks.large": "0",
+        "cityracks.rackid": "1936",
+        "cityracks.small": "1",
+        "cityracks.street": "2nd Ave",
+        "bicycle_parking": "stands",
+        "covered": "no",
+        "cityracks.installed": "5/22/2000"
+      },
+      "lat": 40.7247235,
+      "lng": -73.9903888,
+      "distance_to_edge": 29.577209103835518,
+      "category": "other",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 419364822,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "amenity": "bicycle_parking",
+        "capacity": "2",
+        "cityracks.housenum": "27",
+        "cityracks.large": "0",
+        "cityracks.rackid": "1946",
+        "cityracks.small": "1",
+        "cityracks.street": "2nd Ave",
+        "bicycle_parking": "stands",
+        "covered": "no",
+        "cityracks.installed": "3/7/2000"
+      },
+      "lat": 40.7246027,
+      "lng": -73.9906847,
+      "distance_to_edge": 56.52839640392296,
+      "category": "other",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 1927319778,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "name": "Anthology Film Archives",
+        "wikidata": "Q572548",
+        "wikipedia": "en:Anthology Film Archives",
+        "amenity": "cinema",
+        "website": "http://www.anthologyfilmarchives.org/",
+        "addr:housenumber": "32",
+        "addr:street": "2nd Avenue",
+        "phone": "+1-212-505-5181",
+        "check_date": "2024-07-17",
+        "opening_hours": "\"Temporarily closed\"",
+        "fax": "+1-212-477-2714",
+        "toilets": "yes",
+        "toilets:access": "permissive",
+        "toilets:wheelchair": "yes",
+        "toilets:unisex": "yes",
+        "toilets:number": "2",
+        "toilets:position": "urinal;seated"
+      },
+      "lat": 40.7247547,
+      "lng": -73.9902601,
+      "distance_to_edge": 21.368137667533578,
+      "category": "other",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 3064399841,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "name": "Hare Krishna Temple",
+        "wikidata": "Q190193",
+        "wikipedia": "en:International Society for Krishna Consciousness",
+        "amenity": "place_of_worship",
+        "wheelchair": "no",
+        "addr:city": "New York",
+        "website": "https://www.krishnanyc.com/",
+        "addr:housenumber": "26",
+        "addr:postcode": "10003",
+        "addr:street": "2nd Avenue",
+        "religion": "hindu",
+        "denomination": "Krishna",
+        "opening_hours": "\"Only during events\""
+      },
+      "lat": 40.7244764,
+      "lng": -73.9904429,
+      "distance_to_edge": 55.81241263637961,
+      "category": "other",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 4426893990,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "name": "Blue Ribbon Fried Chicken",
+        "amenity": "fast_food",
+        "addr:city": "New York",
+        "addr:state": "NY",
+        "website": "https://blueribbonfriedchicken.com/",
+        "addr:housenumber": "28",
+        "addr:postcode": "10003",
+        "addr:street": "East 1st Street",
+        "phone": "+1-212-228-0404",
+        "opening_hours": "Mo-We 11:00-22:00; Th-Sa 11:00-24:00; Su 11:00-22:00",
+        "cuisine": "chicken",
+        "drink:beer": "yes"
+      },
+      "lat": 40.7244607,
+      "lng": -73.9909251,
+      "distance_to_edge": 82.1866215919549,
+      "category": "fast_food",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 5243564684,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "operator": "United States Postal Service",
+        "operator:wikidata": "Q668687",
+        "amenity": "post_box",
+        "operator:type": "public",
+        "operator:wikipedia": "en:United States Postal Service",
+        "short_name": "USPS",
+        "operator:short": "USPS",
+        "ref": "1000300163",
+        "brand": "United States Postal Service",
+        "brand:wikidata": "Q668687",
+        "collection_times": "Mo-Fr 10:00,13:00",
+        "operator:website": "https://www.usps.com"
+      },
+      "lat": 40.7247825,
+      "lng": -73.9902794,
+      "distance_to_edge": 19.126299396642494,
+      "category": "other",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 5615998343,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "name": "Rosie's",
+        "amenity": "restaurant",
+        "addr:housenumber": "29",
+        "addr:street": "East 2nd Street",
+        "check_date": "2024-07-17",
+        "opening_hours": "Tu-Th 17:00-23:00; Fr 16:00-23:00; Sa 11:00-23:00; Su 11:00-22:00",
+        "cuisine": "mexican",
+        "outdoor_seating": "street",
+        "contact:facebook": "rosiesnyc",
+        "contact:instagram": "rosiesnyc",
+        "delivery": "yes",
+        "takeaway": "yes",
+        "reservation": "yes",
+        "contact:website": "https://rosiesnyc.com",
+        "contact:phone": "+1-212-335-0114",
+        "contact:email": "info@rosiesnyc.com"
+      },
+      "lat": 40.7249227,
+      "lng": -73.9906582,
+      "distance_to_edge": 40.40377352117648,
+      "category": "restaurants",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 10585010029,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "name": "Angela's Vintage Boutique",
+        "wheelchair": "no",
+        "phone": "+1-212-475-0101",
+        "opening_hours": "\"by appointment only\"",
+        "shop": "clothes",
+        "second_hand": "yes"
+      },
+      "lat": 40.724511,
+      "lng": -73.9904124,
+      "distance_to_edge": 51.26633406253435,
+      "category": "shops",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 12986621801,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "name": "Winson Bakery",
+        "addr:housenumber": "23",
+        "addr:street": "2nd Avenue",
+        "shop": "bakery"
+      },
+      "lat": 40.7245712,
+      "lng": -73.9908364,
+      "distance_to_edge": 68.70760548880621,
+      "category": "shops",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 247841401,
+      "osm_type": "way",
+      "geometry_type": "Polygon",
+      "attributes": {
+        "name": "Manhattan Mini Storage",
+        "website": "https://www.storage-mart.com/manhattan/1988-2nd-ave-east-village",
+        "addr:housenumber": "28",
+        "addr:postcode": "10003",
+        "addr:street": "2nd Avenue",
+        "opening_hours": "Mo-Su 08:00-20:00",
+        "shop": "storage_rental",
+        "building": "warehouse",
+        "height": "31.2",
+        "nycdoitt:bin": "1006080"
+      },
+      "lat": 40.724531215948225,
+      "lng": -73.99022078268253,
+      "distance_to_edge": 45.23547229929091,
+      "category": "shops",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 247841479,
+      "osm_type": "way",
+      "geometry_type": "Polygon",
+      "attributes": {
+        "name": "Cathedral of the Holy Virgin Protection",
+        "ele": "12",
+        "gnis:feature_id": "2082985",
+        "amenity": "place_of_worship",
+        "wheelchair": "no",
+        "addr:city": "New York",
+        "addr:state": "NY",
+        "website": "https://www.nycathedral.org/",
+        "addr:housenumber": "59",
+        "addr:postcode": "10003",
+        "addr:street": "East 2nd Street",
+        "phone": "+1-212-677-4664",
+        "religion": "christian",
+        "denomination": "orthodox",
+        "building": "church",
+        "height": "16.1",
+        "nycdoitt:bin": "1082819",
+        "email": "info@nycathedral.org",
+        "start_date": "1891",
+        "service_times": "Sa 17:30-18:15; Su 09:00-10:45"
+      },
+      "lat": 40.724292190814126,
+      "lng": -73.98949581083228,
+      "distance_to_edge": 91.94096206383956,
+      "category": "other",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 247841526,
+      "osm_type": "way",
+      "geometry_type": "Polygon",
+      "attributes": {
+        "addr:city": "New York",
+        "addr:state": "NY",
+        "addr:housenumber": "38",
+        "addr:postcode": "10003",
+        "addr:street": "East 1st Street",
+        "building": "church",
+        "building:levels": "5",
+        "height": "23.2",
+        "nycdoitt:bin": "1006110",
+        "building:use": "residential"
+      },
+      "lat": 40.724197681625995,
+      "lng": -73.98986522672777,
+      "distance_to_edge": 86.33756275309852,
+      "category": "other",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 1083912118,
+      "osm_type": "way",
+      "geometry_type": "LineString",
+      "attributes": {
+        "barrier": "fence",
+        "fence_type": "metal"
+      },
+      "lat": 40.72453276260206,
+      "lng": -73.98918639448658,
+      "distance_to_edge": 94.9554238236603,
+      "category": "other",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 10679724553,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "natural": "tree"
+      },
+      "lat": 40.7252563,
+      "lng": -73.9910378,
+      "distance_to_edge": 80.61247531283693,
+      "category": "nature",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 297191606,
+      "osm_type": "way",
+      "geometry_type": "Polygon",
+      "attributes": {
+        "name": "Albert's Garden",
+        "website": "https://albertsgarden.org/",
+        "opening_hours": "Su 10:00-16:00; Mo off; Tu 10:00-13:00,14:00-17:00; We 10:00-13:00; Th off; Fr 16:00-19:00; Sa 10:00-12:00,16:00-19:00",
+        "leisure": "garden",
+        "start_date": "1971",
+        "access": "yes",
+        "garden:type": "community",
+        "recycling:compost": "yes"
+      },
+      "lat": 40.72540999874652,
+      "lng": -73.99103239053629,
+      "distance_to_edge": 89.1011959251221,
+      "category": "other",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 1147801234,
+      "osm_type": "way",
+      "geometry_type": "LineString",
+      "attributes": {
+        "barrier": "fence"
+      },
+      "lat": 40.7253260500221,
+      "lng": -73.99109342198669,
+      "distance_to_edge": 88.37373552758642,
+      "category": "other",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 419362508,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "amenity": "bicycle_parking",
+        "capacity": "2",
+        "cityracks.housenum": "43",
+        "cityracks.large": "0",
+        "cityracks.rackid": "1957",
+        "cityracks.small": "1",
+        "cityracks.street": "2nd Ave",
+        "bicycle_parking": "stands",
+        "covered": "no"
+      },
+      "lat": 40.7251324,
+      "lng": -73.9900821,
+      "distance_to_edge": 23.23502640044501,
+      "category": "other",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 3708656535,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "name": "Citi Bike - East 2nd Street & 2nd Avenue",
+        "network": "Citi Bike",
+        "operator": "Lyft",
+        "operator:wikidata": "Q17077936",
+        "amenity": "bicycle_rental",
+        "website": "https://citibikenyc.com/",
+        "operator:type": "private",
+        "operator:wikipedia": "en:Lyft",
+        "fee": "yes",
+        "brand": "Citi Bike",
+        "brand:wikidata": "Q2974438",
+        "capacity": "31",
+        "payment:cash": "no",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "network:wikidata": "Q2974438",
+        "payment:visa": "yes",
+        "network:wikipedia": "en:Citi Bike",
+        "bicycle_rental": "docking_station",
+        "payment:coins": "no"
+      },
+      "lat": 40.7250288,
+      "lng": -73.9906966,
+      "distance_to_edge": 44.79305242410278,
+      "category": "other",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 5243564683,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "name": "2nd Avenue & East 3rd Street",
+        "network": "NYC Transit",
+        "public_transport": "platform",
+        "tactile_paving": "no",
+        "ref": "401786",
+        "highway": "bus_stop",
+        "bench": "no",
+        "bus": "yes",
+        "shelter": "no",
+        "network:wikidata": "Q1325591",
+        "survey:date": "2020-02-27",
+        "route_ref": "M15",
+        "mapillary": "283730776754046"
+      },
+      "lat": 40.725393,
+      "lng": -73.9901735,
+      "distance_to_edge": 50.729320513881284,
+      "category": "other",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 5272612590,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "name": "Bonnie Slotnick Cookbooks",
+        "addr:city": "New York",
+        "addr:state": "NY",
+        "website": "http://www.bonnieslotnickcookbooks.com",
+        "addr:housenumber": "28",
+        "addr:postcode": "10003",
+        "addr:street": "East 2nd Street",
+        "phone": "+1-212-989-8962",
+        "check_date": "2024-02-25",
+        "opening_hours": "13:00-19:00 \"usually closed one day a week, see website for schedule\"",
+        "shop": "books",
+        "second_hand": "yes",
+        "books": "cookbooks;antiquarian"
+      },
+      "lat": 40.7252021,
+      "lng": -73.9907309,
+      "distance_to_edge": 55.06781842774915,
+      "category": "shops",
+      "route_segment": 0
+    }
+  ],
+  "metadata": {
+    "generated_at": "2025-07-28T15:02:19.630811",
+    "algorithm": "poi_weighted_shortest_path"
+  }
+}

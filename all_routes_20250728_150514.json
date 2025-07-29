@@ -1,0 +1,2903 @@
+{
+  "metadata": {
+    "generated_at": "2025-07-28T15:05:14.815776",
+    "total_routes": 5
+  },
+  "routes": [
+    {
+      "name": "Restaurant Route",
+      "result": {
+        "route_type": "direct_time_constrained",
+        "coordinates": [
+          {
+            "lat": 40.7249136,
+            "lng": -73.9921498
+          },
+          {
+            "lat": 40.7251346,
+            "lng": -73.9920684
+          },
+          {
+            "lat": 40.7252643,
+            "lng": -73.9920206
+          },
+          {
+            "lat": 40.725527,
+            "lng": -73.9919239
+          },
+          {
+            "lat": 40.725651,
+            "lng": -73.9918858
+          },
+          {
+            "lat": 40.7262642,
+            "lng": -73.9916657
+          },
+          {
+            "lat": 40.7264049,
+            "lng": -73.9916155
+          },
+          {
+            "lat": 40.7269587,
+            "lng": -73.9914254
+          },
+          {
+            "lat": 40.727083,
+            "lng": -73.9913785
+          },
+          {
+            "lat": 40.7276268,
+            "lng": -73.9911399
+          },
+          {
+            "lat": 40.7276935,
+            "lng": -73.9910918
+          },
+          {
+            "lat": 40.7277422,
+            "lng": -73.9910561
+          },
+          {
+            "lat": 40.7282404,
+            "lng": -73.9906941
+          },
+          {
+            "lat": 40.7283519,
+            "lng": -73.9906079
+          },
+          {
+            "lat": 40.7288164,
+            "lng": -73.9902623
+          },
+          {
+            "lat": 40.7289365,
+            "lng": -73.9901771
+          },
+          {
+            "lat": 40.7294347,
+            "lng": -73.9898194
+          },
+          {
+            "lat": 40.7295653,
+            "lng": -73.9897165
+          },
+          {
+            "lat": 40.729817,
+            "lng": -73.9895377
+          },
+          {
+            "lat": 40.7299059,
+            "lng": -73.9894745
+          },
+          {
+            "lat": 40.7300276,
+            "lng": -73.9893879
+          },
+          {
+            "lat": 40.7300413,
+            "lng": -73.9893774
+          },
+          {
+            "lat": 40.7301397,
+            "lng": -73.9893112
+          },
+          {
+            "lat": 40.7306127,
+            "lng": -73.9889547
+          },
+          {
+            "lat": 40.7307232,
+            "lng": -73.9888754
+          },
+          {
+            "lat": 40.7312115,
+            "lng": -73.9885244
+          },
+          {
+            "lat": 40.7313274,
+            "lng": -73.988438
+          },
+          {
+            "lat": 40.7318545,
+            "lng": -73.9880601
+          },
+          {
+            "lat": 40.7319695,
+            "lng": -73.9879843
+          },
+          {
+            "lat": 40.7324931,
+            "lng": -73.9875948
+          },
+          {
+            "lat": 40.7326112,
+            "lng": -73.9875103
+          },
+          {
+            "lat": 40.7331444,
+            "lng": -73.9871149
+          },
+          {
+            "lat": 40.7332421,
+            "lng": -73.9870475
+          },
+          {
+            "lat": 40.7333326,
+            "lng": -73.9869851
+          },
+          {
+            "lat": 40.7338725,
+            "lng": -73.9865902
+          },
+          {
+            "lat": 40.7339861,
+            "lng": -73.9865088
+          },
+          {
+            "lat": 40.7345122,
+            "lng": -73.9861201
+          },
+          {
+            "lat": 40.7346247,
+            "lng": -73.9860373
+          },
+          {
+            "lat": 40.7350973,
+            "lng": -73.9856943
+          },
+          {
+            "lat": 40.7352078,
+            "lng": -73.9856121
+          },
+          {
+            "lat": 40.7356808,
+            "lng": -73.985266
+          },
+          {
+            "lat": 40.7355418,
+            "lng": -73.9849368
+          },
+          {
+            "lat": 40.7354477,
+            "lng": -73.9850042
+          }
+        ],
+        "nodes": [
+          13001001651,
+          8309479085,
+          8309479086,
+          13001001662,
+          13001001668,
+          8309479098,
+          8309479101,
+          8309479111,
+          8309479112,
+          8309479222,
+          8309479289,
+          8309479200,
+          8309479197,
+          8309479194,
+          8309479188,
+          8309479184,
+          3919359290,
+          3919359300,
+          4235738197,
+          4235738195,
+          11916135047,
+          11916135046,
+          3973686163,
+          8309479253,
+          8309479262,
+          8309479263,
+          8309479602,
+          8309479603,
+          8309479606,
+          8309479605,
+          8309479666,
+          8309479670,
+          3985008870,
+          8309479690,
+          8310246168,
+          8310246174,
+          9507816944,
+          9507816959,
+          9679181061,
+          9679181041,
+          9679181069,
+          9679181068,
+          5282642710
+        ],
+        "distance_meters": 1381.1,
+        "time_minutes": 18.4,
+        "waypoints": 43,
+        "pois_along_route": 468,
+        "poi_categories": {
+          "other": 197,
+          "shops": 119,
+          "bars_pubs": 21,
+          "cafes": 26,
+          "restaurants": 56,
+          "nature": 19,
+          "recreation": 7,
+          "fast_food": 23
+        },
+        "detailed_pois": [
+          {
+            "osm_id": 419361349,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "amenity": "bicycle_parking",
+              "capacity": "2",
+              "cityracks.housenum": "296",
+              "cityracks.large": "0",
+              "cityracks.rackid": "2269",
+              "cityracks.small": "1",
+              "cityracks.street": "Elizabeth St",
+              "bicycle_parking": "stands",
+              "covered": "no"
+            },
+            "lat": 40.7249168,
+            "lng": -73.9932072,
+            "distance_to_edge": 89.10691259047096,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 419366791,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "amenity": "bicycle_parking",
+              "capacity": "2",
+              "cityracks.housenum": "290",
+              "cityracks.large": "0",
+              "cityracks.rackid": "2262",
+              "cityracks.small": "1",
+              "cityracks.street": "Elizabeth St",
+              "bicycle_parking": "stands",
+              "covered": "no"
+            },
+            "lat": 40.7248278,
+            "lng": -73.9932449,
+            "distance_to_edge": 92.77506468439188,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 419367565,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Arté Salon",
+              "website": "https://www.artesalon.com",
+              "shop": "hairdresser"
+            },
+            "lat": 40.724848,
+            "lng": -73.9931701,
+            "distance_to_edge": 86.28872803102841,
+            "category": "shops",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 9505710292,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Tom & Jerry",
+              "amenity": "bar"
+            },
+            "lat": 40.7246444,
+            "lng": -73.9932411,
+            "distance_to_edge": 96.71214662847542,
+            "category": "bars_pubs",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 10689604900,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Double Q",
+              "shop": "hairdresser"
+            },
+            "lat": 40.7249106,
+            "lng": -73.9931438,
+            "distance_to_edge": 83.76420600230851,
+            "category": "shops",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 10689604902,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "David B. Heller",
+              "alt_name": "Raga Partners",
+              "website": "https://dbh.io",
+              "office": "company"
+            },
+            "lat": 40.7249699,
+            "lng": -73.9931218,
+            "distance_to_edge": 82.14846898873115,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 12055649675,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Raf's",
+              "amenity": "cafe",
+              "addr:city": "New York",
+              "website": "https://rafsnewyork.com",
+              "addr:housenumber": "290",
+              "addr:postcode": "10012",
+              "addr:street": "Elizabeth Street",
+              "opening_hours": "Tu-Su 09:00-14:00,17:00-22:00+",
+              "cocktails": "yes",
+              "cuisine": "italian;french;breakfast;pastry",
+              "drink:beer": "yes",
+              "drink:liquor": "yes",
+              "drink:wine": "yes",
+              "drink:coffee": "yes",
+              "drink:espresso": "yes",
+              "drink:tea": "yes"
+            },
+            "lat": 40.7246991,
+            "lng": -73.9932247,
+            "distance_to_edge": 93.6686371629416,
+            "category": "cafes",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 939422856,
+            "osm_type": "way",
+            "geometry_type": "Polygon",
+            "attributes": {
+              "name": "The Detox Market",
+              "website": "https://www.thedetoxmarket.com",
+              "addr:housenumber": "76",
+              "addr:postcode": "10012",
+              "addr:street": "East Houston Street",
+              "phone": "+1-646-476-5876",
+              "opening_hours": "Mo-Su 10:00-18:00",
+              "shop": "cosmetics",
+              "building": "retail",
+              "height": "8.5",
+              "nycdoitt:bin": "1090504"
+            },
+            "lat": 40.72456105115949,
+            "lng": -73.99316426427963,
+            "distance_to_edge": 94.04793318453466,
+            "category": "shops",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 2547041131,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Duane Park",
+              "alt_name": "Bowery Poetry",
+              "amenity": "theatre",
+              "website": "https://www.duaneparknyc.com",
+              "addr:housenumber": "308",
+              "addr:postcode": "10012",
+              "addr:street": "Bowery",
+              "phone": "+1-212-732-5555",
+              "theatre:genre": "burlesque"
+            },
+            "lat": 40.7248886,
+            "lng": -73.9926111,
+            "distance_to_edge": 38.97263740740918,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 4314829890,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Liz Christy Garden",
+              "tourism": "attraction",
+              "wikidata": "Q6660076",
+              "wikipedia": "en:Liz Christy Garden",
+              "wheelchair": "limited"
+            },
+            "lat": 40.724241,
+            "lng": -73.9921517,
+            "distance_to_edge": 74.78987904776255,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 4848258522,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "310 Bowery Bar",
+              "amenity": "bar",
+              "website": "https://www.310bowery.nyc",
+              "addr:housenumber": "310",
+              "addr:postcode": "10012",
+              "addr:street": "Bowery",
+              "phone": "+1-917-409-3036",
+              "check_date": "2024-11-05",
+              "opening_hours": "Tu-Th 17:00-02:00; Fr 17:00-04:00; Sa 12:00-04:00; Su 12:00-24:00",
+              "cocktails": "yes",
+              "cuisine": "pizza",
+              "drink:beer": "draught",
+              "drink:liquor": "yes",
+              "drink:wine": "yes",
+              "opening_hours:signed": "no"
+            },
+            "lat": 40.7249654,
+            "lng": -73.9925829,
+            "distance_to_edge": 36.94867070911798,
+            "category": "bars_pubs",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 4848258523,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Chef Restaurant Supplies",
+              "addr:housenumber": "296",
+              "addr:postcode": "10012",
+              "addr:street": "Bowery",
+              "opening_hours": "Mo-Sa 09:00-17:30",
+              "shop": "trade",
+              "trade": "restaurant_equipment"
+            },
+            "lat": 40.7245123,
+            "lng": -73.99274,
+            "distance_to_edge": 66.81930831380495,
+            "category": "shops",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 5978556720,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Chase",
+              "amenity": "bank",
+              "addr:housenumber": "4",
+              "addr:street": "East 1st Street",
+              "opening_hours": "Mo-Fr 08:00-18:00",
+              "brand": "Chase",
+              "brand:wikidata": "Q524629"
+            },
+            "lat": 40.7249291,
+            "lng": -73.9920604,
+            "distance_to_edge": 7.7282975117191395,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 6261910542,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "East Houston Street & Bowery",
+              "public_transport": "platform",
+              "tactile_paving": "no",
+              "ref": "402071",
+              "highway": "bus_stop",
+              "bench": "no",
+              "bus": "yes",
+              "shelter": "no",
+              "route_ref": "M21",
+              "passenger_information_display": "no"
+            },
+            "lat": 40.7244218,
+            "lng": -73.9929879,
+            "distance_to_edge": 89.32294031160693,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 9659603357,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Slainte",
+              "amenity": "pub",
+              "addr:city": "New York",
+              "website": "https://slaintenbarnyc.com",
+              "addr:housenumber": "304",
+              "addr:street": "Bowery",
+              "phone": "+1-212-253-7030",
+              "opening_hours": "Mo-Tu 12:00-01:00; We 12:00-02:00; Th-Sa 12:00-03:00; Su 12:00-01:00",
+              "cocktails": "yes",
+              "cuisine": "pub",
+              "drink:beer": "draught",
+              "drink:liquor": "yes",
+              "drink:wine": "yes",
+              "outdoor_seating": "sidewalk;street"
+            },
+            "lat": 40.7247677,
+            "lng": -73.9926478,
+            "distance_to_edge": 44.99276666316623,
+            "category": "bars_pubs",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 9659603358,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "addr:housenumber": "302",
+              "addr:street": "Bowery",
+              "check_date": "2024-11-05",
+              "note": "“store for rent” sign in window; empty inside",
+              "shop": "vacant"
+            },
+            "lat": 40.724706,
+            "lng": -73.9926742,
+            "distance_to_edge": 49.85681652621566,
+            "category": "shops",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 9661358848,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Bowery Poetry",
+              "amenity": "theatre",
+              "website": "https://www.bowerypoetry.com",
+              "addr:housenumber": "308",
+              "addr:postcode": "10012",
+              "addr:street": "Bowery",
+              "phone": "+1-212-614-0505",
+              "old_name": "Bowery Poetry Club",
+              "theatre:genre": "poetry"
+            },
+            "lat": 40.7249142,
+            "lng": -73.9926017,
+            "distance_to_edge": 38.08128932570502,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 9864163123,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "amenity": "bench",
+              "material": "wood",
+              "backrest": "yes"
+            },
+            "lat": 40.7242483,
+            "lng": -73.9922817,
+            "distance_to_edge": 74.80834804064065,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 10224157727,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Ixta",
+              "amenity": "restaurant",
+              "website": "https://ixtanyc.com",
+              "addr:housenumber": "299",
+              "addr:postcode": "10003",
+              "addr:street": "Bowery",
+              "phone": "+1-917-732-4982",
+              "opening_hours": "Mo-We 17:00-22:00; Th 17:00-23:00; Fr 17:00-24:00; Sa 11:30-15:00,17:00-24:00; Su 11:30-15:00,17:00-22:00",
+              "cocktails": "yes",
+              "cuisine": "mexican",
+              "drink:liquor": "yes",
+              "bar": "yes",
+              "outdoor_seating": "sidewalk"
+            },
+            "lat": 40.7244056,
+            "lng": -73.9922194,
+            "distance_to_edge": 56.79070159162394,
+            "category": "restaurants",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 1264496108,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "addr:city": "New York",
+              "addr:state": "NY",
+              "addr:housenumber": "6",
+              "addr:street": "Extra Place",
+              "shop": "vacant",
+              "addr:country": "US"
+            },
+            "lat": 40.7248452,
+            "lng": -73.9914406,
+            "distance_to_edge": 60.24573711347181,
+            "category": "shops",
+            "route_segment": 0
+          }
+        ],
+        "metadata": {
+          "generated_at": "2025-07-28T15:04:56.930737",
+          "algorithm": "poi_weighted_shortest_path"
+        }
+      }
+    },
+    {
+      "name": "Nature Route",
+      "result": {
+        "route_type": "time_extended",
+        "coordinates": [
+          {
+            "lat": 40.7281545,
+            "lng": -73.9901477
+          },
+          {
+            "lat": 40.7281735,
+            "lng": -73.9901903
+          },
+          {
+            "lat": 40.7282004,
+            "lng": -73.9902508
+          },
+          {
+            "lat": 40.7283519,
+            "lng": -73.9906079
+          },
+          {
+            "lat": 40.7288164,
+            "lng": -73.9902623
+          },
+          {
+            "lat": 40.7289365,
+            "lng": -73.9901771
+          },
+          {
+            "lat": 40.7294347,
+            "lng": -73.9898194
+          },
+          {
+            "lat": 40.7295653,
+            "lng": -73.9897165
+          },
+          {
+            "lat": 40.729817,
+            "lng": -73.9895377
+          },
+          {
+            "lat": 40.7299059,
+            "lng": -73.9894745
+          },
+          {
+            "lat": 40.7300276,
+            "lng": -73.9893879
+          },
+          {
+            "lat": 40.7300413,
+            "lng": -73.9893774
+          },
+          {
+            "lat": 40.7301397,
+            "lng": -73.9893112
+          },
+          {
+            "lat": 40.7306127,
+            "lng": -73.9889547
+          },
+          {
+            "lat": 40.7307232,
+            "lng": -73.9888754
+          },
+          {
+            "lat": 40.7312115,
+            "lng": -73.9885244
+          },
+          {
+            "lat": 40.7313274,
+            "lng": -73.988438
+          },
+          {
+            "lat": 40.7318545,
+            "lng": -73.9880601
+          },
+          {
+            "lat": 40.7319695,
+            "lng": -73.9879843
+          },
+          {
+            "lat": 40.7324931,
+            "lng": -73.9875948
+          }
+        ],
+        "nodes": [
+          8309479203,
+          8309479204,
+          8309479195,
+          8309479194,
+          8309479188,
+          8309479184,
+          3919359290,
+          3919359300,
+          4235738197,
+          4235738195,
+          11916135047,
+          11916135046,
+          3973686163,
+          8309479253,
+          8309479262,
+          8309479263,
+          8309479602,
+          8309479603,
+          8309479606,
+          8309479605
+        ],
+        "distance_meters": 570.7,
+        "time_minutes": 7.6,
+        "waypoints": 20,
+        "pois_along_route": 238,
+        "poi_categories": {
+          "other": 98,
+          "bars_pubs": 8,
+          "restaurants": 31,
+          "shops": 56,
+          "nature": 14,
+          "cafes": 14,
+          "recreation": 4,
+          "fast_food": 13
+        },
+        "detailed_pois": [
+          {
+            "osm_id": 419362183,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "amenity": "bicycle_parking",
+              "capacity": "2",
+              "cityracks.housenum": "228",
+              "cityracks.large": "0",
+              "cityracks.rackid": "2942",
+              "cityracks.small": "1",
+              "cityracks.street": "E 5th St",
+              "bicycle_parking": "stands",
+              "covered": "no",
+              "cityracks.installed": "4/18/2005"
+            },
+            "lat": 40.7273969,
+            "lng": -73.9906374,
+            "distance_to_edge": 93.80500457431371,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 1103801857,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "The Standard, East Village",
+              "operator": "The Standard",
+              "tourism": "hotel",
+              "wikidata": "Q5167816",
+              "addr:city": "New York",
+              "addr:housenumber": "25",
+              "addr:postcode": "10003",
+              "addr:street": "Cooper Square",
+              "phone": "(212) 475-5700"
+            },
+            "lat": 40.727834,
+            "lng": -73.9907398,
+            "distance_to_edge": 61.31412751220756,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 4846659021,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "The Scratcher",
+              "amenity": "pub",
+              "addr:city": "New York",
+              "addr:state": "NY",
+              "addr:housenumber": "209",
+              "addr:postcode": "10003",
+              "addr:street": "East 5th Street",
+              "phone": "+1-212-477-0030",
+              "opening_hours": "Su, Mo 16:00-03:00; Tu-Sa 15:00-03:00",
+              "cuisine": "irish",
+              "name:en": "The Scratcher",
+              "outdoor_seating": "street",
+              "contact:facebook": "https://www.facebook.com/The-Scratcher-385137331523990/",
+              "brewery": "yes"
+            },
+            "lat": 40.7275668,
+            "lng": -73.9905608,
+            "distance_to_edge": 74.04231828572141,
+            "category": "bars_pubs",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 6662115185,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "The Standard",
+              "amenity": "restaurant",
+              "opening_hours": "Mo-Su 08:00-22:00"
+            },
+            "lat": 40.727873,
+            "lng": -73.9907388,
+            "distance_to_edge": 58.82796953197175,
+            "category": "restaurants",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 9659538021,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Emilio Antonio",
+              "addr:housenumber": "208",
+              "addr:postcode": "10003",
+              "addr:street": "East 6th Street",
+              "phone": "+1-212-673-7979",
+              "shop": "hairdresser"
+            },
+            "lat": 40.7279655,
+            "lng": -73.9901415,
+            "distance_to_edge": 21.02233399115245,
+            "category": "shops",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 9659538029,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Best Cleaner",
+              "addr:housenumber": "208-210",
+              "addr:postcode": "10003",
+              "addr:street": "East 6th Street",
+              "phone": "+1-646-858-3617",
+              "shop": "dry_cleaning",
+              "laundry_service": "yes"
+            },
+            "lat": 40.7279739,
+            "lng": -73.9901645,
+            "distance_to_edge": 20.131639784003138,
+            "category": "shops",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 10794178315,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "natural": "tree"
+            },
+            "lat": 40.7278826,
+            "lng": -73.9909715,
+            "distance_to_edge": 75.71594650738585,
+            "category": "nature",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 11942932648,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Duo",
+              "amenity": "cafe",
+              "cuisine": "pastry",
+              "drink:tea": "yes"
+            },
+            "lat": 40.7273382,
+            "lng": -73.9900277,
+            "distance_to_edge": 91.32992771460701,
+            "category": "cafes",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 11942932649,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Cooper Square Veterinary Hospital",
+              "amenity": "veterinary",
+              "website": "https://coopersquarevet.com",
+              "phone": "+1-212-777-2630",
+              "opening_hours": "Mo-Fr 09:00-17:00"
+            },
+            "lat": 40.7275358,
+            "lng": -73.9904837,
+            "distance_to_edge": 74.39467525717606,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 241833301,
+            "osm_type": "way",
+            "geometry_type": "Polygon",
+            "attributes": {
+              "addr:housenumber": "218",
+              "addr:street": "East 5th street",
+              "shop": "vacant",
+              "building": "apartments",
+              "height": "16.4"
+            },
+            "lat": 40.7274611,
+            "lng": -73.99014465,
+            "distance_to_edge": 77.10299048605468,
+            "category": "shops",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 462324926,
+            "osm_type": "way",
+            "geometry_type": "LineString",
+            "attributes": {
+              "barrier": "fence",
+              "height": "1.5"
+            },
+            "lat": 40.72748083299225,
+            "lng": -73.990869475233,
+            "distance_to_edge": 96.49053425537984,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 462325450,
+            "osm_type": "way",
+            "geometry_type": "LineString",
+            "attributes": {
+              "barrier": "wall",
+              "height": "2",
+              "material": "brick",
+              "colour": "#D2B2AB"
+            },
+            "lat": 40.7276912247955,
+            "lng": -73.99087254030044,
+            "distance_to_edge": 79.9018845742612,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 9659538022,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "East 6 Street Barber Shop",
+              "phone": "+1-212-260-2504",
+              "opening_hours": "Mo-Sa 09:00-19:00; Su 10:00-19:00",
+              "shop": "hairdresser",
+              "hairdresser": "barber"
+            },
+            "lat": 40.7278588,
+            "lng": -73.9899009,
+            "distance_to_edge": 38.9052418984954,
+            "category": "shops",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 9659538026,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "216E Taichi",
+              "phone": "+1-212-777-1213",
+              "shop": "massage"
+            },
+            "lat": 40.7278759,
+            "lng": -73.9899436,
+            "distance_to_edge": 35.432784068918956,
+            "category": "shops",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 11942932650,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Goto",
+              "website": "http://www.goto-hair.com",
+              "phone": "+1-212-260-9130",
+              "opening_hours": "Tu-Su 13:00-21:00",
+              "shop": "hairdresser"
+            },
+            "lat": 40.7273068,
+            "lng": -73.9899585,
+            "distance_to_edge": 95.59872895710745,
+            "category": "shops",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 11942932651,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Yo-C Salon",
+              "shop": "hairdresser"
+            },
+            "lat": 40.7272878,
+            "lng": -73.989909,
+            "distance_to_edge": 98.44931331707019,
+            "category": "shops",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 241833272,
+            "osm_type": "way",
+            "geometry_type": "Polygon",
+            "attributes": {
+              "name": "The Ukrainian Museum",
+              "tourism": "museum",
+              "wikidata": "Q4470591",
+              "wikipedia": "en:Ukrainian Museum",
+              "wheelchair": "yes",
+              "website": "https://www.theukrainianmuseum.org/",
+              "addr:housenumber": "222",
+              "addr:postcode": "10003",
+              "addr:street": "East 6th Street",
+              "phone": "+1 212 228 0110",
+              "opening_hours": "We-Su 12:00-18:00",
+              "fee": "yes",
+              "building": "yes",
+              "height": "13.0",
+              "nycdoitt:bin": "1006616",
+              "opening_hours:url": "https://www.theukrainianmuseum.org/visit/"
+            },
+            "lat": 40.72766689143182,
+            "lng": -73.98976165981547,
+            "distance_to_edge": 63.229374346138776,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 1160592967,
+            "osm_type": "way",
+            "geometry_type": "Polygon",
+            "attributes": {
+              "landuse": "grass"
+            },
+            "lat": 40.728216990319886,
+            "lng": -73.99116702809431,
+            "distance_to_edge": 86.17429860043548,
+            "category": "nature",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 357610837,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "NYC4Ukraine",
+              "operator": "Cornerstone First Ukrainian Assembly of God",
+              "website": "https://www.nyc4ukraine.com",
+              "phone": "+1-917-409-0415",
+              "office": "charity"
+            },
+            "lat": 40.7289704,
+            "lng": -73.9900888,
+            "distance_to_edge": 90.85959813577009,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 3708656702,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Citi Bike - Shevchenko Pl & E 7 St",
+              "network": "Citi Bike",
+              "operator": "Lyft",
+              "operator:wikidata": "Q17077936",
+              "amenity": "bicycle_rental",
+              "website": "https://citibikenyc.com/",
+              "operator:type": "private",
+              "operator:wikipedia": "en:Lyft",
+              "fee": "yes",
+              "brand": "Citi Bike",
+              "brand:wikidata": "Q2974438",
+              "capacity": "55",
+              "network:wikidata": "Q2974438",
+              "network:wikipedia": "en:Citi Bike",
+              "bicycle_rental": "docking_station"
+            },
+            "lat": 40.728145,
+            "lng": -73.990214,
+            "distance_to_edge": 5.685764231683376,
+            "category": "other",
+            "route_segment": 0
+          }
+        ],
+        "metadata": {
+          "generated_at": "2025-07-28T15:05:00.935769",
+          "algorithm": "poi_weighted_shortest_path"
+        }
+      }
+    },
+    {
+      "name": "Shopping Route",
+      "result": {
+        "route_type": "time_extended",
+        "coordinates": [
+          {
+            "lat": 40.7300336,
+            "lng": -73.9878237
+          },
+          {
+            "lat": 40.7300696,
+            "lng": -73.9876569
+          },
+          {
+            "lat": 40.729939,
+            "lng": -73.9873375
+          },
+          {
+            "lat": 40.7297706,
+            "lng": -73.9869721
+          },
+          {
+            "lat": 40.7293021,
+            "lng": -73.9873317
+          },
+          {
+            "lat": 40.7291937,
+            "lng": -73.9874092
+          },
+          {
+            "lat": 40.729081,
+            "lng": -73.9871639
+          },
+          {
+            "lat": 40.728194,
+            "lng": -73.9850487
+          },
+          {
+            "lat": 40.728081,
+            "lng": -73.98478
+          },
+          {
+            "lat": 40.7275975,
+            "lng": -73.9851355
+          },
+          {
+            "lat": 40.7274917,
+            "lng": -73.9852137
+          },
+          {
+            "lat": 40.7269846,
+            "lng": -73.9855823
+          },
+          {
+            "lat": 40.7268773,
+            "lng": -73.9856622
+          },
+          {
+            "lat": 40.7260331,
+            "lng": -73.9836798
+          },
+          {
+            "lat": 40.7255775,
+            "lng": -73.9840275
+          },
+          {
+            "lat": 40.7254623,
+            "lng": -73.9841084
+          },
+          {
+            "lat": 40.7249861,
+            "lng": -73.9844529
+          },
+          {
+            "lat": 40.724932,
+            "lng": -73.9844919
+          },
+          {
+            "lat": 40.724901,
+            "lng": -73.9845143
+          },
+          {
+            "lat": 40.7248379,
+            "lng": -73.9845598
+          },
+          {
+            "lat": 40.7247713,
+            "lng": -73.984332
+          },
+          {
+            "lat": 40.7242672,
+            "lng": -73.984692
+          },
+          {
+            "lat": 40.7241664,
+            "lng": -73.9847771
+          }
+        ],
+        "nodes": [
+          8309479255,
+          8309479252,
+          8309479244,
+          8309479243,
+          4235738193,
+          4235738198,
+          8309479237,
+          8309479238,
+          8309479513,
+          8309479520,
+          8309479522,
+          8309479529,
+          8309479531,
+          4216045853,
+          6814309595,
+          7027040770,
+          9166033060,
+          7120676174,
+          7120757712,
+          7120757698,
+          6814309599,
+          7120757702,
+          7465408778
+        ],
+        "distance_meters": 1004.8,
+        "time_minutes": 13.4,
+        "waypoints": 23,
+        "pois_along_route": 420,
+        "poi_categories": {
+          "other": 145,
+          "bars_pubs": 43,
+          "cafes": 18,
+          "fast_food": 31,
+          "restaurants": 75,
+          "shops": 102,
+          "recreation": 3,
+          "nature": 3
+        },
+        "detailed_pois": [
+          {
+            "osm_id": 357642387,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Saint Mark's Historic District",
+              "ele": "11",
+              "gnis:feature_id": "2418025",
+              "wikidata": "Q7589961",
+              "historic": "district"
+            },
+            "lat": 40.73,
+            "lng": -73.9886111,
+            "distance_to_edge": 66.45355435855137,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 419366545,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "amenity": "bicycle_parking",
+              "capacity": "4",
+              "cityracks.housenum": "0",
+              "cityracks.large": "0",
+              "cityracks.rackid": "1898",
+              "cityracks.small": "2",
+              "cityracks.street": "Stuyvesant St",
+              "bicycle_parking": "stands",
+              "covered": "no"
+            },
+            "lat": 40.7298725,
+            "lng": -73.9883784,
+            "distance_to_edge": 50.05570474402008,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 2494245564,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "212 East",
+              "amenity": "bar",
+              "addr:housenumber": "212",
+              "addr:postcode": "10003",
+              "addr:street": "East 9th Street",
+              "opening_hours": "Mo-Su 15:30-22:00",
+              "cuisine": "asian",
+              "outdoor_seating": "no"
+            },
+            "lat": 40.7297134,
+            "lng": -73.98873,
+            "distance_to_edge": 84.2595692021128,
+            "category": "bars_pubs",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 2494246184,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Little Man Parking",
+              "amenity": "parking_entrance",
+              "addr:housenumber": "220",
+              "addr:postcode": "10003",
+              "addr:street": "East 9th Street",
+              "fee": "yes",
+              "parking": "multi-storey"
+            },
+            "lat": 40.7295516,
+            "lng": -73.9883192,
+            "distance_to_edge": 67.93954170963816,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 5397270880,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Cha-An Teahouse",
+              "operator": "T.I.C. Restaurant Group",
+              "amenity": "cafe",
+              "addr:city": "New York",
+              "addr:state": "NY",
+              "website": "https://www.chaanteahouse.com",
+              "addr:housenumber": "230",
+              "addr:postcode": "10003",
+              "addr:street": "East 9th Street",
+              "phone": "+1 212-228-8030",
+              "opening_hours": "Mo 15:00-20:00; Th 14:00-20:00; Fr 14:00-21:00; Sa 13:00-21:00; Su 13:00-19:00",
+              "cocktails": "yes",
+              "email": "info@chaanteahouse.com",
+              "start_date": "2004",
+              "level": "1",
+              "outdoor_seating": "no",
+              "contact:facebook": "https://www.facebook.com/chaanteahouse",
+              "contact:instagram": "https://www.instagram.com/chaanteahouse",
+              "website:menu": "https://www.chaanteahouse.com/menu",
+              "reservation": "no",
+              "drink:tea": "yes",
+              "drink:matcha": "yes",
+              "contact:yelp": "contact:yelp=https://www.yelp.com/biz/cha-an-new-york"
+            },
+            "lat": 40.7294568,
+            "lng": -73.9881288,
+            "distance_to_edge": 69.097898379636,
+            "category": "cafes",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 9978637391,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Solas",
+              "amenity": "bar",
+              "addr:city": "New York",
+              "addr:state": "NY",
+              "website": "https://www.solasbar.com",
+              "addr:housenumber": "232",
+              "addr:postcode": "10003",
+              "addr:street": "East 9th Street",
+              "phone": "+1-212-375-0297",
+              "opening_hours": "Tu-Th 16:00-02:00, Fr-Sa 16:00-04:00, Su 16:00-02:00",
+              "cocktails": "yes",
+              "drink:beer": "draught",
+              "drink:liquor": "yes",
+              "drink:wine": "yes"
+            },
+            "lat": 40.7294285,
+            "lng": -73.9880625,
+            "distance_to_edge": 70.22847703609882,
+            "category": "bars_pubs",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 10790204163,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Tori Bien",
+              "amenity": "fast_food",
+              "addr:city": "New York",
+              "addr:state": "NY",
+              "website": "https://www.toribien.com/",
+              "addr:housenumber": "220",
+              "addr:postcode": "10003",
+              "addr:street": "East 9th Street",
+              "phone": "+1-929-946-0789",
+              "opening_hours": "Mo off; Tu-Th 11:00-20:00; Fr-Sa 11:00-21:00; Su 12:00-19:00",
+              "cuisine": "japanese",
+              "email": "info@toribien.com",
+              "delivery": "yes",
+              "takeaway": "yes",
+              "drive_through": "no",
+              "diet:gluten_free": "yes"
+            },
+            "lat": 40.7295936,
+            "lng": -73.9884493,
+            "distance_to_edge": 71.92073139233963,
+            "category": "fast_food",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 11031505388,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Budget",
+              "amenity": "car_rental",
+              "official_name": "Budget Rent a Car",
+              "brand": "Budget",
+              "brand:wikidata": "Q1001437"
+            },
+            "lat": 40.7295607,
+            "lng": -73.9883721,
+            "distance_to_edge": 70.00308851812474,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 11031505389,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Sushi Bar Hasaki",
+              "amenity": "restaurant"
+            },
+            "lat": 40.7297391,
+            "lng": -73.9887902,
+            "distance_to_edge": 87.77722923636091,
+            "category": "restaurants",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 11031505390,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Royal Convenience",
+              "shop": "cannabis"
+            },
+            "lat": 40.7296759,
+            "lng": -73.9886421,
+            "distance_to_edge": 79.60898659911324,
+            "category": "shops",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 11031505391,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Shiso",
+              "amenity": "restaurant",
+              "cuisine": "sushi"
+            },
+            "lat": 40.7296555,
+            "lng": -73.9885942,
+            "distance_to_edge": 77.34854460414589,
+            "category": "restaurants",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 11031505392,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Yakinku West",
+              "amenity": "restaurant",
+              "cuisine": "japanese",
+              "drink:beer": "yes",
+              "drink:wine": "yes",
+              "drink:sake": "yes"
+            },
+            "lat": 40.729627,
+            "lng": -73.9885276,
+            "distance_to_edge": 74.57952491449984,
+            "category": "restaurants",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 894035964,
+            "osm_type": "way",
+            "geometry_type": "Polygon",
+            "attributes": {
+              "leisure": "garden"
+            },
+            "lat": 40.729832189043606,
+            "lng": -73.98851039389278,
+            "distance_to_edge": 62.045733720128545,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 419363800,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "amenity": "bicycle_parking",
+              "capacity": "5",
+              "cityracks.housenum": "159",
+              "cityracks.large": "1",
+              "cityracks.rackid": "1959",
+              "cityracks.small": "0",
+              "cityracks.street": "E 10th St",
+              "bicycle_parking": "stands",
+              "covered": "no"
+            },
+            "lat": 40.7298476,
+            "lng": -73.9871661,
+            "distance_to_edge": 59.14522766875308,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 2262146997,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Citizens Bank",
+              "amenity": "bank",
+              "wheelchair": "yes",
+              "addr:city": "New York",
+              "addr:state": "NY",
+              "addr:housenumber": "143",
+              "addr:postcode": "10003",
+              "addr:street": "Second Avenue",
+              "phone": "+1-212-699-7380",
+              "opening_hours": "Mo-Fr 09:00-17:00",
+              "short_name": "Citizens",
+              "brand": "Citizens Bank",
+              "brand:wikidata": "Q5122694",
+              "atm": "yes"
+            },
+            "lat": 40.7291822,
+            "lng": -73.9874819,
+            "distance_to_edge": 98.95541236759738,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 2494245490,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "16 Handles",
+              "amenity": "ice_cream",
+              "website": "https://locations.16handles.com/16-handles-42b222d5bda0",
+              "addr:housenumber": "153",
+              "addr:postcode": "10003",
+              "addr:street": "2nd Avenue",
+              "phone": "+1-212-260-4414",
+              "opening_hours": "Mo-We 12:00-22:00; Th-Sa 12:00-23:00; Su 12:00-22:00",
+              "outdoor_seating": "sidewalk",
+              "delivery": "yes",
+              "takeaway": "yes",
+              "diet:vegan": "yes"
+            },
+            "lat": 40.7296131,
+            "lng": -73.9871866,
+            "distance_to_edge": 71.19145812244517,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 2494245636,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Whiskers Holistic Petcare",
+              "wheelchair": "yes",
+              "website": "https://www.1800whiskers.com",
+              "addr:housenumber": "235",
+              "addr:postcode": "10003",
+              "addr:street": "East 9th Street",
+              "phone": "+1-212-979-2532",
+              "opening_hours": "Mo-Sa 11:00-19:00; Su 12:00-18:00",
+              "shop": "pet"
+            },
+            "lat": 40.729444,
+            "lng": -73.987554,
+            "distance_to_edge": 69.38762378708371,
+            "category": "shops",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 4816775623,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Sobaya",
+              "alt_name": "Soba-ya",
+              "amenity": "restaurant",
+              "website": "https://sobaya.square.site",
+              "addr:postcode": "10003",
+              "phone": "+1-212-533-6966",
+              "opening_hours": "Mo,We,Th 12:00-21:00; Fr,Sa 12:00-22:00; Su 12:00-20:00",
+              "cuisine": "japanese",
+              "outdoor_seating": "no",
+              "indoor_seating": "yes"
+            },
+            "lat": 40.7295926,
+            "lng": -73.9879292,
+            "distance_to_edge": 49.8362439055873,
+            "category": "restaurants",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 4947754523,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Kingston Hall",
+              "amenity": "bar",
+              "addr:city": "New York",
+              "addr:state": "NY",
+              "website": "https://www.kingstonhall.com/",
+              "addr:housenumber": "149",
+              "addr:postcode": "10003",
+              "addr:street": "2nd Avenue",
+              "opening_hours": "Mo-Th 16:00-02:00, Fr 16:00-04:00, Sa 13:00-04:00, Su 15:00-24:00",
+              "cocktails": "yes",
+              "cuisine": "jamaican",
+              "drink:beer": "draught",
+              "drink:liquor": "yes",
+              "sport": "billiards",
+              "level": "1"
+            },
+            "lat": 40.7295009,
+            "lng": -73.9872677,
+            "distance_to_edge": 75.52189274458287,
+            "category": "bars_pubs",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 5309543775,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "East 9th Street & 2nd Avenue",
+              "network": "NYC Transit",
+              "operator": "New York City Transit Authority",
+              "public_transport": "platform",
+              "tactile_paving": "no",
+              "wheelchair": "yes",
+              "ref": "401567",
+              "highway": "bus_stop",
+              "bench": "no",
+              "bus": "yes",
+              "shelter": "no",
+              "network:wikidata": "Q1325591",
+              "route_ref": "M8",
+              "lit": "yes"
+            },
+            "lat": 40.7293754,
+            "lng": -73.9875178,
+            "distance_to_edge": 77.59486369649362,
+            "category": "other",
+            "route_segment": 0
+          }
+        ],
+        "metadata": {
+          "generated_at": "2025-07-28T15:05:05.355522",
+          "algorithm": "poi_weighted_shortest_path"
+        }
+      }
+    },
+    {
+      "name": "Nightlife Route",
+      "result": {
+        "route_type": "time_extended",
+        "coordinates": [
+          {
+            "lat": 40.7261856,
+            "lng": -73.989269
+          },
+          {
+            "lat": 40.7262881,
+            "lng": -73.9895119
+          },
+          {
+            "lat": 40.726779,
+            "lng": -73.9891502
+          },
+          {
+            "lat": 40.7268497,
+            "lng": -73.9890983
+          },
+          {
+            "lat": 40.7268956,
+            "lng": -73.9890616
+          },
+          {
+            "lat": 40.7274058,
+            "lng": -73.9887128
+          },
+          {
+            "lat": 40.7275145,
+            "lng": -73.9886328
+          },
+          {
+            "lat": 40.7279815,
+            "lng": -73.9882829
+          },
+          {
+            "lat": 40.7280947,
+            "lng": -73.9881999
+          },
+          {
+            "lat": 40.7286008,
+            "lng": -73.9878351
+          },
+          {
+            "lat": 40.7287104,
+            "lng": -73.98776
+          },
+          {
+            "lat": 40.7291937,
+            "lng": -73.9874092
+          },
+          {
+            "lat": 40.7293021,
+            "lng": -73.9873317
+          },
+          {
+            "lat": 40.7297706,
+            "lng": -73.9869721
+          },
+          {
+            "lat": 40.7298866,
+            "lng": -73.9868876
+          },
+          {
+            "lat": 40.7301169,
+            "lng": -73.9867282
+          },
+          {
+            "lat": 40.7303755,
+            "lng": -73.9865458
+          },
+          {
+            "lat": 40.7304885,
+            "lng": -73.9864638
+          },
+          {
+            "lat": 40.7310214,
+            "lng": -73.9860819
+          },
+          {
+            "lat": 40.7310765,
+            "lng": -73.9860408
+          },
+          {
+            "lat": 40.7311269,
+            "lng": -73.9860032
+          },
+          {
+            "lat": 40.7316572,
+            "lng": -73.9856106
+          },
+          {
+            "lat": 40.7317675,
+            "lng": -73.9855339
+          },
+          {
+            "lat": 40.732314,
+            "lng": -73.9851336
+          },
+          {
+            "lat": 40.7324009,
+            "lng": -73.9850686
+          },
+          {
+            "lat": 40.7324875,
+            "lng": -73.9850038
+          },
+          {
+            "lat": 40.7333326,
+            "lng": -73.9869851
+          },
+          {
+            "lat": 40.7338725,
+            "lng": -73.9865902
+          },
+          {
+            "lat": 40.7339861,
+            "lng": -73.9865088
+          }
+        ],
+        "nodes": [
+          7977873352,
+          7977873349,
+          7977873361,
+          7977873367,
+          9936447156,
+          8309479202,
+          8309479205,
+          8309479206,
+          8309479185,
+          11890003845,
+          11890003839,
+          4235738198,
+          4235738193,
+          8309479243,
+          5780020555,
+          5780020553,
+          5780020554,
+          8309479264,
+          8309479595,
+          8309479601,
+          8309479594,
+          8309479604,
+          8309479668,
+          8309479669,
+          8309479684,
+          8309479677,
+          8309479690,
+          8310246168,
+          8310246174
+        ],
+        "distance_meters": 1085.2,
+        "time_minutes": 14.5,
+        "waypoints": 29,
+        "pois_along_route": 459,
+        "poi_categories": {
+          "shops": 124,
+          "bars_pubs": 35,
+          "other": 166,
+          "cafes": 27,
+          "restaurants": 64,
+          "fast_food": 37,
+          "nature": 5,
+          "recreation": 1
+        },
+        "detailed_pois": [
+          {
+            "osm_id": 8290463752,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "La Sirena",
+              "website": "https://www.lasirenanyc.com/",
+              "phone": "+1-212-780-9113",
+              "opening_hours": "Mo,Th-Sa 12:00-17:00",
+              "shop": "gift",
+              "description": "Mexican gifts, crafts, clothing"
+            },
+            "lat": 40.7258719,
+            "lng": -73.9902978,
+            "distance_to_edge": 93.44895051074715,
+            "category": "shops",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 9978637388,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Tim Dark Hair",
+              "phone": "+1-212-995-5008",
+              "shop": "hairdresser",
+              "disused:website": "http://www.timdark.com"
+            },
+            "lat": 40.7258891,
+            "lng": -73.9903386,
+            "distance_to_edge": 95.97338162194443,
+            "category": "shops",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 9978637389,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Whiskey Town",
+              "amenity": "bar",
+              "addr:housenumber": "29",
+              "addr:postcode": "10003",
+              "addr:street": "East 3rd Street",
+              "phone": "+1-212-505-7344",
+              "check_date": "2024-11-11",
+              "cocktails": "yes",
+              "cuisine": "pizza",
+              "drink:beer": "draught",
+              "drink:liquor": "yes",
+              "drink:wine": "yes"
+            },
+            "lat": 40.7258327,
+            "lng": -73.9902044,
+            "distance_to_edge": 88.0514946322978,
+            "category": "bars_pubs",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 419360075,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "amenity": "bicycle_parking",
+              "capacity": "5",
+              "cityracks.housenum": "60",
+              "cityracks.large": "1",
+              "cityracks.rackid": "1919",
+              "cityracks.small": "0",
+              "cityracks.street": "2nd Ave",
+              "bicycle_parking": "stands",
+              "covered": "no"
+            },
+            "lat": 40.725771,
+            "lng": -73.9896305,
+            "distance_to_edge": 55.25688675159389,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 419360233,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "amenity": "bicycle_parking",
+              "capacity": "2",
+              "cityracks.housenum": "53",
+              "cityracks.large": "0",
+              "cityracks.rackid": "259",
+              "cityracks.small": "1",
+              "cityracks.street": "E 3rd St",
+              "bicycle_parking": "stands",
+              "covered": "no"
+            },
+            "lat": 40.7253672,
+            "lng": -73.9891773,
+            "distance_to_edge": 91.32942195980338,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 419361940,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "amenity": "bicycle_parking",
+              "capacity": "5",
+              "cityracks.housenum": "94",
+              "cityracks.large": "1",
+              "cityracks.rackid": "1931",
+              "cityracks.small": "0",
+              "cityracks.street": "E 4th St",
+              "bicycle_parking": "stands",
+              "covered": "no"
+            },
+            "lat": 40.725953,
+            "lng": -73.9890574,
+            "distance_to_edge": 31.41479749897631,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 419364060,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "amenity": "bicycle_parking",
+              "capacity": "2",
+              "cityracks.housenum": "53",
+              "cityracks.large": "0",
+              "cityracks.rackid": "1939",
+              "cityracks.small": "1",
+              "cityracks.street": "2nd Ave",
+              "bicycle_parking": "stands",
+              "covered": "no",
+              "cityracks.installed": "3/7/2000"
+            },
+            "lat": 40.7257025,
+            "lng": -73.9899097,
+            "distance_to_edge": 76.16178154641615,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 419366655,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "amenity": "bicycle_parking",
+              "capacity": "5",
+              "cityracks.housenum": "62",
+              "cityracks.large": "1",
+              "cityracks.rackid": "1922",
+              "cityracks.small": "0",
+              "cityracks.street": "2nd Ave",
+              "bicycle_parking": "stands",
+              "covered": "no"
+            },
+            "lat": 40.7258408,
+            "lng": -73.9895647,
+            "distance_to_edge": 45.7259446845983,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 419366737,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "amenity": "bicycle_parking",
+              "capacity": "2",
+              "cityracks.housenum": "62",
+              "cityracks.large": "0",
+              "cityracks.rackid": "257",
+              "cityracks.small": "1",
+              "cityracks.street": "2nd Ave",
+              "bicycle_parking": "stands",
+              "covered": "no"
+            },
+            "lat": 40.7258506,
+            "lng": -73.989556,
+            "distance_to_edge": 44.4127420970541,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 419366998,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "amenity": "bicycle_parking",
+              "capacity": "2",
+              "cityracks.housenum": "60",
+              "cityracks.large": "0",
+              "cityracks.rackid": "258",
+              "cityracks.small": "1",
+              "cityracks.street": "2nd Ave",
+              "bicycle_parking": "stands",
+              "covered": "no"
+            },
+            "lat": 40.7257805,
+            "lng": -73.9896222,
+            "distance_to_edge": 53.98997202175468,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 419367643,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "amenity": "bicycle_parking",
+              "capacity": "5",
+              "cityracks.housenum": "61",
+              "cityracks.large": "1",
+              "cityracks.rackid": "1921",
+              "cityracks.small": "0",
+              "cityracks.street": "2nd Ave",
+              "bicycle_parking": "stands",
+              "covered": "no"
+            },
+            "lat": 40.7259586,
+            "lng": -73.9896996,
+            "distance_to_edge": 44.20147288912975,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 2546985590,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Kona Coffee and Company",
+              "amenity": "cafe",
+              "addr:housenumber": "57",
+              "addr:postcode": "10003",
+              "addr:street": "2nd Avenue",
+              "cuisine": "coffee_shop;sandwich",
+              "outdoor_seating": "sidewalk",
+              "drink:coffee": "yes",
+              "drink:espresso": "yes",
+              "drink:tea": "yes"
+            },
+            "lat": 40.7258624,
+            "lng": -73.9898947,
+            "distance_to_edge": 63.80924824590194,
+            "category": "cafes",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 2546985593,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Dim Sum Palace",
+              "alt_name": "Dim Sum Sam",
+              "amenity": "restaurant",
+              "website": "https://www.dimsumpalace.com",
+              "addr:housenumber": "59",
+              "addr:postcode": "10003",
+              "addr:street": "2nd Avenue",
+              "opening_hours": "Mo-Fr 11:30-24:00, 0:00- 1:30; Sa-Su 10:30-24:00, 0:00- 1:30",
+              "cuisine": "chinese",
+              "contact:instagram": "https://www.instagram.com/dimsumpalace/"
+            },
+            "lat": 40.7259382,
+            "lng": -73.989838,
+            "distance_to_edge": 55.27948100832312,
+            "category": "restaurants",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 2547054885,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "The Bean",
+              "amenity": "cafe",
+              "website": "https://www.thebean.nyc",
+              "phone": "+1-917-262-0929",
+              "check_date": "2024-11-11",
+              "opening_hours": "Mo-Su 07:00-21:00",
+              "cuisine": "coffee_shop",
+              "internet_access": "wlan",
+              "internet_access:fee": "no",
+              "brand": "The Bean",
+              "brand:wikidata": "Q122209700",
+              "outdoor_seating": "no",
+              "takeaway": "yes",
+              "diet:vegan": "yes",
+              "drink:coffee": "yes",
+              "drink:espresso": "yes",
+              "drink:tea": "yes",
+              "indoor_seating": "yes"
+            },
+            "lat": 40.7256046,
+            "lng": -73.98962,
+            "distance_to_edge": 71.053287790799,
+            "category": "cafes",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 2547054894,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Iglesia de Cristo",
+              "amenity": "place_of_worship",
+              "phone": "+1-212-677-7970",
+              "religion": "christian",
+              "denomination": "church_of_christ"
+            },
+            "lat": 40.7256627,
+            "lng": -73.9895775,
+            "distance_to_edge": 63.690893390476646,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 2547054897,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "The Black Ant",
+              "alt_name": "La Hormiga Negra",
+              "amenity": "restaurant",
+              "website": "https://www.theblackantnyc.com",
+              "addr:housenumber": "60",
+              "addr:postcode": "10003",
+              "addr:street": "2nd Avenue",
+              "phone": "+1-212-598-0300",
+              "opening_hours": "Tu-Th 16:00-23:00; Fr 16:00-24:00; Sa 11:00-15:30,16:00-24:00; Su 11:00-15:30,16:00-24:00",
+              "cocktails": "yes",
+              "cuisine": "mexican",
+              "drink:beer": "yes",
+              "drink:liquor": "yes",
+              "drink:wine": "yes",
+              "happy_hours": "Tu-Su 16:00-19:00",
+              "outdoor_seating": "yes",
+              "name:es": "La Hormiga Negra",
+              "indoor_seating": "yes"
+            },
+            "lat": 40.7257664,
+            "lng": -73.9895015,
+            "distance_to_edge": 50.563035492115205,
+            "category": "restaurants",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 2547054902,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "East Side Church of Christ",
+              "amenity": "place_of_worship",
+              "phone": "+1-212-677-6608",
+              "religion": "christian",
+              "denomination": "church_of_christ"
+            },
+            "lat": 40.7256479,
+            "lng": -73.9895423,
+            "distance_to_edge": 64.07172284926351,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 2547055660,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Bronx Brewery",
+              "alt_name": "Bastard Burgers",
+              "amenity": "bar",
+              "wheelchair": "yes",
+              "website": "https://thebronxbrewery.com/breweries-in-manhattan/",
+              "check_date": "2024-05-18",
+              "opening_hours": "Mo-Th 16:00-23:00; Fr 16:00-24:00; Sa 12:00-24:00; Su 12:00-23:00",
+              "cuisine": "burger",
+              "drink:beer": "draught",
+              "drink:wine": "yes",
+              "outdoor_seating": "yes",
+              "diet:vegan": "yes",
+              "opening_hours:kitchen": "Mo-Th 16:00-22:00; Fr 16:00-23:00; Sa 12:00-23:00; Su 12:00-22:00",
+              "indoor_seating": "yes"
+            },
+            "lat": 40.7258666,
+            "lng": -73.9894282,
+            "distance_to_edge": 37.92332207350429,
+            "category": "bars_pubs",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 5446733056,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "The Boiler Room",
+              "amenity": "bar",
+              "wheelchair": "yes",
+              "addr:city": "New York",
+              "addr:state": "NY",
+              "website": "https://www.theboilerroomnyc.com/",
+              "addr:housenumber": "86",
+              "addr:postcode": "10003",
+              "addr:street": "East 4th Street",
+              "opening_hours": "Mo-Su 16:00-04:00",
+              "sport": "billiards",
+              "toilets": "yes"
+            },
+            "lat": 40.7259518,
+            "lng": -73.9891412,
+            "distance_to_edge": 28.139716803481935,
+            "category": "bars_pubs",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 5792838043,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "NYC Velo",
+              "wheelchair": "yes",
+              "addr:city": "New York",
+              "addr:state": "NY",
+              "website": "https://www.nycvelo.com/",
+              "addr:housenumber": "66",
+              "addr:postcode": "10003",
+              "addr:street": "2nd Avenue",
+              "phone": "+1-212-253-7771",
+              "opening_hours": "Mo-Fr 11:00-19:00; Sa,Su 11:00-18:00",
+              "shop": "bicycle",
+              "branch": "East Village",
+              "service:bicycle:repair": "yes",
+              "service:bicycle:retail": "yes",
+              "service:bicycle:pump": "yes"
+            },
+            "lat": 40.7259156,
+            "lng": -73.9893924,
+            "distance_to_edge": 31.772471661029133,
+            "category": "shops",
+            "route_segment": 0
+          }
+        ],
+        "metadata": {
+          "generated_at": "2025-07-28T15:05:10.063908",
+          "algorithm": "poi_weighted_shortest_path"
+        }
+      }
+    },
+    {
+      "name": "Mixed Route",
+      "result": {
+        "route_type": "time_extended",
+        "coordinates": [
+          {
+            "lat": 40.727083,
+            "lng": -73.9913785
+          },
+          {
+            "lat": 40.7276268,
+            "lng": -73.9911399
+          },
+          {
+            "lat": 40.7276935,
+            "lng": -73.9910918
+          },
+          {
+            "lat": 40.7277422,
+            "lng": -73.9910561
+          },
+          {
+            "lat": 40.7282404,
+            "lng": -73.9906941
+          },
+          {
+            "lat": 40.7283519,
+            "lng": -73.9906079
+          },
+          {
+            "lat": 40.7288164,
+            "lng": -73.9902623
+          },
+          {
+            "lat": 40.7289365,
+            "lng": -73.9901771
+          },
+          {
+            "lat": 40.7294347,
+            "lng": -73.9898194
+          },
+          {
+            "lat": 40.7286008,
+            "lng": -73.9878351
+          },
+          {
+            "lat": 40.7287104,
+            "lng": -73.98776
+          },
+          {
+            "lat": 40.7291937,
+            "lng": -73.9874092
+          },
+          {
+            "lat": 40.7293021,
+            "lng": -73.9873317
+          },
+          {
+            "lat": 40.7297706,
+            "lng": -73.9869721
+          },
+          {
+            "lat": 40.7298866,
+            "lng": -73.9868876
+          },
+          {
+            "lat": 40.7301169,
+            "lng": -73.9867282
+          },
+          {
+            "lat": 40.7303755,
+            "lng": -73.9865458
+          },
+          {
+            "lat": 40.7304885,
+            "lng": -73.9864638
+          },
+          {
+            "lat": 40.7310214,
+            "lng": -73.9860819
+          },
+          {
+            "lat": 40.7310765,
+            "lng": -73.9860408
+          },
+          {
+            "lat": 40.7311269,
+            "lng": -73.9860032
+          },
+          {
+            "lat": 40.7316572,
+            "lng": -73.9856106
+          },
+          {
+            "lat": 40.7317675,
+            "lng": -73.9855339
+          },
+          {
+            "lat": 40.732314,
+            "lng": -73.9851336
+          },
+          {
+            "lat": 40.7324009,
+            "lng": -73.9850686
+          },
+          {
+            "lat": 40.7324875,
+            "lng": -73.9850038
+          },
+          {
+            "lat": 40.73303,
+            "lng": -73.9846015
+          },
+          {
+            "lat": 40.7331463,
+            "lng": -73.9845183
+          },
+          {
+            "lat": 40.7330482,
+            "lng": -73.9842792
+          },
+          {
+            "lat": 40.7329138,
+            "lng": -73.9839577
+          },
+          {
+            "lat": 40.7329558,
+            "lng": -73.9839245
+          }
+        ],
+        "nodes": [
+          8309479112,
+          8309479222,
+          8309479289,
+          8309479200,
+          8309479197,
+          8309479194,
+          8309479188,
+          8309479184,
+          3919359290,
+          11890003845,
+          11890003839,
+          4235738198,
+          4235738193,
+          8309479243,
+          5780020555,
+          5780020553,
+          5780020554,
+          8309479264,
+          8309479595,
+          8309479601,
+          8309479594,
+          8309479604,
+          8309479668,
+          8309479669,
+          8309479684,
+          8309479677,
+          8310246165,
+          4191922370,
+          4191926878,
+          8239295657,
+          8239295656
+        ],
+        "distance_meters": 1121.9,
+        "time_minutes": 15.0,
+        "waypoints": 31,
+        "pois_along_route": 457,
+        "poi_categories": {
+          "bars_pubs": 32,
+          "shops": 119,
+          "other": 174,
+          "fast_food": 31,
+          "cafes": 24,
+          "nature": 18,
+          "restaurants": 52,
+          "recreation": 7
+        },
+        "detailed_pois": [
+          {
+            "osm_id": 9668165674,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Elvis",
+              "amenity": "bar",
+              "addr:city": "New York",
+              "addr:state": "NY",
+              "addr:housenumber": "54",
+              "addr:street": "Great Jones Street",
+              "check_date": "2024-11-05",
+              "drink:wine": "yes",
+              "outdoor_seating": "sidewalk;street"
+            },
+            "lat": 40.7267174,
+            "lng": -73.9921853,
+            "distance_to_edge": 79.2136085858918,
+            "category": "bars_pubs",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 9671008375,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "3.1 Phillip Lim",
+              "website": "https://www.31philliplim.com/stores/new-york",
+              "phone": "+1-212-334-1160",
+              "opening_hours": "Mo-Su 12:00-18:00",
+              "shop": "clothes"
+            },
+            "lat": 40.7267891,
+            "lng": -73.9923402,
+            "distance_to_edge": 87.38045547166807,
+            "category": "shops",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 247839669,
+            "osm_type": "way",
+            "geometry_type": "Polygon",
+            "attributes": {
+              "name": "FDNY Engine 33/Ladder 9",
+              "operator": "New York City Fire Department",
+              "operator:wikidata": "Q283207",
+              "ele": "13",
+              "gnis:feature_id": "2084055",
+              "wikidata": "Q5451866",
+              "wikipedia": "en:Firehouse, Engine Company 33 and Ladder Company 9",
+              "amenity": "fire_station",
+              "addr:city": "New York",
+              "addr:housenumber": "42",
+              "addr:postcode": "10012",
+              "addr:street": "Great Jones Street",
+              "operator:wikipedia": "en:New York City Fire Department",
+              "ref:nrhp": "72000871",
+              "building": "fire_station",
+              "height": "17.7",
+              "nycdoitt:bin": "1008526",
+              "start_date": "1899"
+            },
+            "lat": 40.72697847488386,
+            "lng": -73.99251394616242,
+            "distance_to_edge": 96.38338664973028,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 247839742,
+            "osm_type": "way",
+            "geometry_type": "Polygon",
+            "attributes": {
+              "name": "T&J Auto Repairs",
+              "addr:housenumber": "56",
+              "addr:postcode": "10012",
+              "addr:street": "Great Jones Street",
+              "shop": "car_repair",
+              "building": "yes",
+              "height": "4.7",
+              "nycdoitt:bin": "1008522",
+              "atm": "yes"
+            },
+            "lat": 40.72668175215417,
+            "lng": -73.99208499739721,
+            "distance_to_edge": 74.39738167652015,
+            "category": "shops",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 1415913860,
+            "osm_type": "way",
+            "geometry_type": "LineString",
+            "attributes": {
+              "name": "I♥NY More Than Ever!",
+              "tourism": "artwork",
+              "artist_name": "Jolene",
+              "subject:wikidata": "Q1353042",
+              "wikimedia_commons": "File:NoHo Manhattan November 2021 088.jpg",
+              "inscription": "“New York, you’re perfect. Don’t please don’t change a thing” —LCD Soundsystem / I♥NY more than ever!",
+              "artwork_type": "mural",
+              "subject": "I Love New York"
+            },
+            "lat": 40.726648,
+            "lng": -73.9921002,
+            "distance_to_edge": 77.70542697716449,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 1108561376,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Phebes",
+              "amenity": "pub",
+              "addr:city": "New York",
+              "website": "https://www.phebesnyc.com/",
+              "addr:housenumber": "359",
+              "addr:postcode": "10003",
+              "addr:street": "Bowery",
+              "opening_hours": "Mo-Fr 12:00-23:00; Sa,Su 11:00-23:00",
+              "official_name": "Phebes Tavern & Grill",
+              "description": "Good pub food, amazing happy hour"
+            },
+            "lat": 40.7268762,
+            "lng": -73.9913525,
+            "distance_to_edge": 23.099248827517,
+            "category": "bars_pubs",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 2546985529,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Sweetgreen",
+              "amenity": "fast_food",
+              "opening_hours": "Mo-Su 10:30-21:00",
+              "cuisine": "salad",
+              "brand": "Sweetgreen",
+              "brand:wikidata": "Q18636413",
+              "takeaway": "yes"
+            },
+            "lat": 40.7264799,
+            "lng": -73.9914802,
+            "distance_to_edge": 67.60702641030919,
+            "category": "fast_food",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 2547000497,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "NoHo Green Oasis",
+              "addr:housenumber": "356",
+              "addr:postcode": "10012",
+              "addr:street": "Bowery",
+              "shop": "cannabis"
+            },
+            "lat": 40.7268659,
+            "lng": -73.9918668,
+            "distance_to_edge": 47.7060222374132,
+            "category": "shops",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 2547000511,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Côte à Coast",
+              "short_name": "CAC",
+              "shop": "interior_decoration"
+            },
+            "lat": 40.7266969,
+            "lng": -73.9919454,
+            "distance_to_edge": 64.2279817936658,
+            "category": "shops",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 5763553400,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Bowery & East 4th Street",
+              "public_transport": "platform",
+              "tactile_paving": "no",
+              "highway": "bus_stop",
+              "bench": "no",
+              "bus": "yes",
+              "shelter": "no",
+              "route_ref": "M103",
+              "ref:signed": "no"
+            },
+            "lat": 40.7267131,
+            "lng": -73.9915324,
+            "distance_to_edge": 43.1270792336832,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 5763553401,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Bowery & East 4th Street",
+              "public_transport": "platform",
+              "tactile_paving": "no",
+              "highway": "bus_stop",
+              "bench": "no",
+              "bus": "yes",
+              "shelter": "no",
+              "route_ref": "M103",
+              "ref:signed": "no"
+            },
+            "lat": 40.7269174,
+            "lng": -73.9917874,
+            "distance_to_edge": 39.06823100574992,
+            "category": "other",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 9659534494,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Noho Food Market",
+              "addr:city": "New York",
+              "addr:state": "NY",
+              "website": "https://nohofoodmarket.com",
+              "addr:housenumber": "352",
+              "addr:postcode": "10012",
+              "addr:street": "Bowery",
+              "phone": "+1-646-476-4047",
+              "cuisine": "breakfast;sandwich",
+              "drink:beer": "yes",
+              "shop": "convenience",
+              "drink:coffee": "yes",
+              "payment:cash": "yes",
+              "payment:contactless": "yes",
+              "atm": "yes",
+              "payment:american_express": "yes",
+              "payment:discover_card": "yes",
+              "payment:mastercard": "yes",
+              "payment:visa": "yes",
+              "payment:unionpay": "yes"
+            },
+            "lat": 40.7267631,
+            "lng": -73.9919243,
+            "distance_to_edge": 58.14330786443824,
+            "category": "shops",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 9661358859,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Kettl",
+              "amenity": "cafe",
+              "website": "https://kettl.co",
+              "phone": "+1-646-590-0479",
+              "opening_hours": "Mo-Th 09:00-19:00; Fr-Su 09:00-20:00",
+              "cuisine": "pastry",
+              "drink:coffee": "no",
+              "drink:tea": "yes"
+            },
+            "lat": 40.7266373,
+            "lng": -73.991949,
+            "distance_to_edge": 69.04545916399667,
+            "category": "cafes",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 9661358860,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Current Coffee",
+              "amenity": "cafe",
+              "cuisine": "coffee_shop",
+              "takeaway": "yes",
+              "drink:coffee": "yes",
+              "drink:espresso": "yes",
+              "drink:tea": "yes"
+            },
+            "lat": 40.7266017,
+            "lng": -73.9919637,
+            "distance_to_edge": 72.77327209024311,
+            "category": "cafes",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 9875403133,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Short Stories",
+              "amenity": "bar",
+              "outdoor_seating": "yes"
+            },
+            "lat": 40.7266571,
+            "lng": -73.9914371,
+            "distance_to_edge": 47.614668224500996,
+            "category": "bars_pubs",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 9978637390,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Three Jewels",
+              "amenity": "cafe",
+              "website": "https://www.threejewels.org",
+              "phone": "+1-646-964 5736",
+              "leisure": "fitness_centre",
+              "sport": "yoga",
+              "opening_hours:cafe": "Mo-Fr 07:30-20:00; Sa-Su 09:00-20:00"
+            },
+            "lat": 40.7262473,
+            "lng": -73.9911911,
+            "distance_to_edge": 94.2578514517451,
+            "category": "cafes",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 9986008926,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Kino",
+              "website": "https://www.kinohairny.com/",
+              "phone": "+1-212-420-5930",
+              "opening_hours": "Mo-Tu,Th-Fr 12:00-20:00; Sa-Su 11:00-20:00",
+              "shop": "hairdresser"
+            },
+            "lat": 40.7262139,
+            "lng": -73.9911116,
+            "distance_to_edge": 99.22214179197404,
+            "category": "shops",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 10794178317,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "natural": "tree"
+            },
+            "lat": 40.726839,
+            "lng": -73.9917703,
+            "distance_to_edge": 42.73352419144385,
+            "category": "nature",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 10794178318,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "natural": "tree"
+            },
+            "lat": 40.7266585,
+            "lng": -73.9918454,
+            "distance_to_edge": 61.44925677180508,
+            "category": "nature",
+            "route_segment": 0
+          },
+          {
+            "osm_id": 11463577704,
+            "osm_type": "node",
+            "geometry_type": "Point",
+            "attributes": {
+              "name": "Sunday C&C Eatery",
+              "amenity": "fast_food",
+              "cuisine": "eclectic",
+              "diet:vegan": "only"
+            },
+            "lat": 40.726619,
+            "lng": -73.9919996,
+            "distance_to_edge": 73.49325251145683,
+            "category": "fast_food",
+            "route_segment": 0
+          }
+        ],
+        "metadata": {
+          "generated_at": "2025-07-28T15:05:14.814373",
+          "algorithm": "poi_weighted_shortest_path"
+        }
+      }
+    }
+  ]
+}

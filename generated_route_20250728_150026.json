@@ -1,0 +1,343 @@
+{
+  "route_type": "poi_optimized",
+  "coordinates": [
+    {
+      "lat": 40.7525889,
+      "lng": -73.9667443
+    }
+  ],
+  "nodes": [
+    4011424283
+  ],
+  "distance_meters": 0,
+  "time_minutes": 0.0,
+  "waypoints": 1,
+  "pois_along_route": 120,
+  "poi_categories": {
+    "nature": 84,
+    "other": 35,
+    "bars_pubs": 1
+  },
+  "detailed_pois": [
+    {
+      "osm_id": 10997745559,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "denotation": "park",
+        "leaf_type": "broadleaved",
+        "natural": "tree",
+        "leaf_cycle": "deciduous",
+        "genus": "Prunus"
+      },
+      "lat": 40.7518402,
+      "lng": -73.9670979,
+      "distance_to_edge": 88.41947011253703,
+      "category": "nature",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 10997745560,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "denotation": "park",
+        "leaf_type": "broadleaved",
+        "natural": "tree",
+        "leaf_cycle": "deciduous",
+        "genus": "Prunus"
+      },
+      "lat": 40.7518783,
+      "lng": -73.9671147,
+      "distance_to_edge": 84.95209378234813,
+      "category": "nature",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 10997745561,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "denotation": "park",
+        "leaf_type": "broadleaved",
+        "natural": "tree",
+        "leaf_cycle": "deciduous",
+        "genus": "Prunus"
+      },
+      "lat": 40.7518895,
+      "lng": -73.9670591,
+      "distance_to_edge": 82.16619937455076,
+      "category": "nature",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 10997745562,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "denotation": "park",
+        "leaf_type": "broadleaved",
+        "natural": "tree",
+        "leaf_cycle": "deciduous",
+        "genus": "Prunus"
+      },
+      "lat": 40.7518656,
+      "lng": -73.9671482,
+      "distance_to_edge": 87.3273646633221,
+      "category": "nature",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 10997745563,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "denotation": "park",
+        "leaf_type": "broadleaved",
+        "natural": "tree",
+        "leaf_cycle": "deciduous",
+        "genus": "Prunus"
+      },
+      "lat": 40.75186,
+      "lng": -73.9670222,
+      "distance_to_edge": 84.36273364927276,
+      "category": "nature",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 10997745564,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "denotation": "park",
+        "leaf_type": "broadleaved",
+        "natural": "tree",
+        "leaf_cycle": "deciduous",
+        "genus": "Prunus"
+      },
+      "lat": 40.751826,
+      "lng": -73.9670517,
+      "distance_to_edge": 88.69451295057037,
+      "category": "nature",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 10997745565,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "denotation": "park",
+        "leaf_type": "broadleaved",
+        "natural": "tree",
+        "leaf_cycle": "deciduous",
+        "genus": "Prunus"
+      },
+      "lat": 40.7518077,
+      "lng": -73.9670805,
+      "distance_to_edge": 91.36528254154022,
+      "category": "nature",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 10997745566,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "denotation": "park",
+        "leaf_type": "broadleaved",
+        "natural": "tree",
+        "leaf_cycle": "deciduous",
+        "genus": "Prunus"
+      },
+      "lat": 40.7519372,
+      "lng": -73.967047,
+      "distance_to_edge": 76.82069871503887,
+      "category": "nature",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 10997745567,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "denotation": "park",
+        "leaf_type": "broadleaved",
+        "natural": "tree",
+        "leaf_cycle": "deciduous",
+        "genus": "Prunus"
+      },
+      "lat": 40.7519372,
+      "lng": -73.967,
+      "distance_to_edge": 75.59894832974169,
+      "category": "nature",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 10997745568,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "denotation": "park",
+        "leaf_type": "broadleaved",
+        "natural": "tree",
+        "leaf_cycle": "deciduous",
+        "genus": "Prunus"
+      },
+      "lat": 40.7519621,
+      "lng": -73.9670181,
+      "distance_to_edge": 73.41382517470292,
+      "category": "nature",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 11000990977,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "denotation": "park",
+        "leaf_type": "broadleaved",
+        "natural": "tree",
+        "leaf_cycle": "deciduous",
+        "genus": "Prunus"
+      },
+      "lat": 40.7518048,
+      "lng": -73.967154,
+      "distance_to_edge": 93.76961404305014,
+      "category": "nature",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 11000990978,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "denotation": "park",
+        "leaf_type": "broadleaved",
+        "natural": "tree",
+        "leaf_cycle": "deciduous",
+        "genus": "Prunus"
+      },
+      "lat": 40.7517779,
+      "lng": -73.9670929,
+      "distance_to_edge": 94.83945890956934,
+      "category": "nature",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 1184369237,
+      "osm_type": "way",
+      "geometry_type": "Polygon",
+      "attributes": {
+        "leisure": "garden"
+      },
+      "lat": 40.75179093060442,
+      "lng": -73.96712204862017,
+      "distance_to_edge": 94.26303767580387,
+      "category": "other",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 1184369238,
+      "osm_type": "way",
+      "geometry_type": "Polygon",
+      "attributes": {
+        "leisure": "garden"
+      },
+      "lat": 40.75182571472159,
+      "lng": -73.96720265034325,
+      "distance_to_edge": 93.23232475248085,
+      "category": "other",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 8272069178,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "name": "Mother and Child",
+        "tourism": "artwork",
+        "artist_name": "Giacomo Manzù",
+        "material": "bronze",
+        "artwork_type": "sculpture"
+      },
+      "lat": 40.751774,
+      "lng": -73.9665045,
+      "distance_to_edge": 92.83688890028502,
+      "category": "other",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 8272069179,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "name": "Der Aufsteigende",
+        "tourism": "artwork",
+        "artist_name": "Fritz Cremer",
+        "material": "bronze",
+        "artwork_type": "sculpture"
+      },
+      "lat": 40.7519738,
+      "lng": -73.9668876,
+      "distance_to_edge": 69.45298417980473,
+      "category": "other",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 10997705287,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "amenity": "bench"
+      },
+      "lat": 40.7518902,
+      "lng": -73.9669079,
+      "distance_to_edge": 78.90462758896594,
+      "category": "other",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 10997705288,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "amenity": "bench"
+      },
+      "lat": 40.7518668,
+      "lng": -73.9669313,
+      "distance_to_edge": 81.82435198992933,
+      "category": "other",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 10997705289,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "amenity": "bench"
+      },
+      "lat": 40.751841,
+      "lng": -73.9669548,
+      "distance_to_edge": 85.03195907054436,
+      "category": "other",
+      "route_segment": 0
+    },
+    {
+      "osm_id": 10997705290,
+      "osm_type": "node",
+      "geometry_type": "Point",
+      "attributes": {
+        "amenity": "bench"
+      },
+      "lat": 40.7519603,
+      "lng": -73.9667734,
+      "distance_to_edge": 69.94009869522117,
+      "category": "other",
+      "route_segment": 0
+    }
+  ],
+  "metadata": {
+    "generated_at": "2025-07-28T15:00:26.936665",
+    "algorithm": "poi_weighted_shortest_path"
+  }
+}
