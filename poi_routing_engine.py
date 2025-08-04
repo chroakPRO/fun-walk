@@ -86,6 +86,33 @@ class POIRoutingEngine:
         
         print(f"[{datetime.now().strftime('%H:%M:%S')}] Spatial index built with {len(self.poi_spatial_index)} grid cells")
     
+    def _validate_route_edge_usage(self, route: List[int], max_edge_usage: int = 2) -> bool:
+        """Check if route respects maximum edge usage constraint"""
+        edge_usage = {}
+        
+        for i in range(len(route) - 1):
+            u, v = route[i], route[i + 1]
+            # Create canonical edge representation (smaller node first)
+            edge = (min(u, v), max(u, v))
+            edge_usage[edge] = edge_usage.get(edge, 0) + 1
+            
+            if edge_usage[edge] > max_edge_usage:
+                return False
+        
+        return True
+    
+    def _get_route_edge_usage(self, route: List[int]) -> Dict[Tuple[int, int], int]:
+        """Get edge usage count for a route"""
+        edge_usage = {}
+        
+        for i in range(len(route) - 1):
+            u, v = route[i], route[i + 1]
+            # Create canonical edge representation (smaller node first)
+            edge = (min(u, v), max(u, v))
+            edge_usage[edge] = edge_usage.get(edge, 0) + 1
+        
+        return edge_usage
+    
     def _calculate_distance(self, lat1: float, lng1: float, lat2: float, lng2: float) -> float:
         """Calculate distance between two points in meters"""
         R = 6371000  # Earth's radius in meters
@@ -268,6 +295,115 @@ class POIRoutingEngine:
         time_hours = (total_distance / 1000) / walking_speed_kmh
         return time_hours * 60
     
+    def generate_trail(self, start_lat: float, start_lng: float, end_lat: float, end_lng: float,
+                      poi_preferences: Dict[str, float] = None, deviation_factor: float = 0.4) -> Dict:
+        """
+        Generate a trail between points A and B with specified deviation allowance
+        
+        Args:
+            start_lat, start_lng: Starting coordinates
+            end_lat, end_lng: Ending coordinates  
+            poi_preferences: Dictionary of POI category preferences (e.g. {'viewpoints': 30.0, 'nature': 8.0})
+            deviation_factor: Maximum allowed deviation as fraction of direct route (0.4 = 40%)
+        
+        Returns:
+            Dictionary with route information including coordinates, distance, time, and POIs
+        """
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] Generating trail from ({start_lat:.6f}, {start_lng:.6f}) to ({end_lat:.6f}, {end_lng:.6f})")
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] Deviation allowance: {deviation_factor*100:.0f}% of direct route")
+        
+        # Find nearest nodes
+        start_node = ox.distance.nearest_nodes(self.graph, X=start_lng, Y=start_lat, return_dist=False)
+        end_node = ox.distance.nearest_nodes(self.graph, X=end_lng, Y=end_lat, return_dist=False)
+        
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] Start node: {start_node}, End node: {end_node}")
+        
+        # Early exit if start and end are the same node
+        if start_node == end_node:
+            print(f"[{datetime.now().strftime('%H:%M:%S')}] Start and end nodes are identical - returning minimal route")
+            return self._format_route_result([start_node], 'same_location', 0.0, 0.0, [])
+        
+        # Calculate direct route first to establish baseline
+        try:
+            direct_route = nx.shortest_path(self.graph, start_node, end_node, weight='length')
+            direct_time = self.calculate_route_time(direct_route)
+            direct_distance = sum(self.graph[direct_route[i]][direct_route[i+1]].get('length', 0) 
+                                for i in range(len(direct_route) - 1))
+        except nx.NetworkXNoPath:
+            return {'error': 'No route found between start and end points'}
+        
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] Direct route: {direct_distance:.0f}m, {direct_time:.1f} minutes")
+        
+        # Calculate maximum allowed distance based on deviation factor
+        max_allowed_distance = direct_distance * (1 + deviation_factor)
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] Maximum allowed distance: {max_allowed_distance:.0f}m")
+        
+        # If no POI preferences, return direct route
+        if not poi_preferences:
+            return self._format_route_result(direct_route, 'direct', direct_time, direct_distance, [])
+        
+        # Apply POI weights (with nature path preference for routes with nature/viewpoint preferences)
+        prefer_paths = poi_preferences and ('nature' in poi_preferences or 'viewpoints' in poi_preferences)
+        influence_radius = 100.0 if 'viewpoints' in poi_preferences else 50.0
+        self.apply_poi_weights(poi_preferences, influence_radius=influence_radius, prefer_nature_paths=prefer_paths)
+        
+        # Try POI-optimized route first
+        try:
+            poi_route = nx.shortest_path(self.graph, start_node, end_node, weight='poi_weight')
+            poi_time = self.calculate_route_time(poi_route)
+            poi_distance = sum(self.graph[poi_route[i]][poi_route[i+1]].get('length', 0) 
+                             for i in range(len(poi_route) - 1))
+        except nx.NetworkXNoPath:
+            poi_route = direct_route
+            poi_time = direct_time
+            poi_distance = direct_distance
+        
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] POI route: {poi_distance:.0f}m, {poi_time:.1f} minutes")
+        
+        # Select best route within deviation constraints
+        selected_route = poi_route
+        selected_time = poi_time
+        selected_distance = poi_distance
+        route_type = 'poi_optimized'
+        
+        # If POI route exceeds deviation limit, check if we can find a better compromise
+        if poi_distance > max_allowed_distance:
+            print(f"[{datetime.now().strftime('%H:%M:%S')}] POI route exceeds deviation limit, trying alternative approaches...")
+            
+            # Try finding a route through strategic waypoints within deviation limit
+            waypoint_route = self._find_trail_with_waypoints(start_node, end_node, max_allowed_distance, poi_preferences)
+            
+            if waypoint_route and waypoint_route['distance'] <= max_allowed_distance:
+                selected_route = waypoint_route['route']
+                selected_time = waypoint_route['time']
+                selected_distance = waypoint_route['distance']
+                route_type = 'waypoint_optimized'
+                print(f"[{datetime.now().strftime('%H:%M:%S')}] Waypoint route: {selected_distance:.0f}m, {selected_time:.1f} minutes")
+            else:
+                # Fall back to direct route if nothing fits within deviation
+                selected_route = direct_route
+                selected_time = direct_time
+                selected_distance = direct_distance
+                route_type = 'direct_fallback'
+                print(f"[{datetime.now().strftime('%H:%M:%S')}] Using direct route as fallback")
+        
+        # Find POIs along final route
+        route_pois = self._find_pois_along_route(selected_route)
+        
+        # For viewpoint routes, try aggressive viewpoint-seeking if within deviation limit
+        if ('viewpoints' in poi_preferences and poi_preferences['viewpoints'] >= 20.0 and 
+            len([poi for poi in route_pois if poi.get('category') == 'viewpoints']) < 3):
+            print(f"[{datetime.now().strftime('%H:%M:%S')}] Trying aggressive viewpoint routing within deviation limit...")
+            aggressive_route = self._find_aggressive_viewpoint_trail(start_node, end_node, max_allowed_distance, poi_preferences)
+            if aggressive_route and aggressive_route.get('distance_meters', 0) <= max_allowed_distance:
+                aggressive_viewpoints = len([poi for poi in aggressive_route.get('detailed_pois', []) if poi.get('category') == 'viewpoints'])
+                regular_viewpoints = len([poi for poi in route_pois if poi.get('category') == 'viewpoints'])
+                if aggressive_viewpoints > regular_viewpoints:
+                    print(f"[{datetime.now().strftime('%H:%M:%S')}] Aggressive route found more viewpoints within deviation limit!")
+                    return aggressive_route
+        
+        return self._format_route_result(selected_route, route_type, selected_time, selected_distance, route_pois)
+
     def find_route(self, start_lat: float, start_lng: float, end_lat: float, end_lng: float, 
                    poi_preferences: Dict[str, float] = None, target_time_minutes: Optional[float] = None,
                    max_detour_factor: float = 2.0) -> Dict:
@@ -351,21 +487,55 @@ class POIRoutingEngine:
         # Find POIs along route
         route_pois = self._find_pois_along_route(selected_route)
         
-        # For viewpoint routes, try aggressive viewpoint-seeking if we didn't get enough viewpoints
-        if ('viewpoints' in poi_preferences and poi_preferences['viewpoints'] >= 20.0 and 
-            len([poi for poi in route_pois if poi.get('category') == 'viewpoints']) < 5):  # Increased threshold to trigger more often
-            print(f"[{datetime.now().strftime('%H:%M:%S')}] Too few viewpoints found, attempting aggressive viewpoint routing...")
-            aggressive_route = self._find_aggressive_viewpoint_route(start_node, end_node, target_time_minutes, poi_preferences)
-            if aggressive_route:
-                regular_viewpoints = len([poi for poi in route_pois if poi.get('category') == 'viewpoints'])
-                aggressive_viewpoints = len([poi for poi in aggressive_route.get('detailed_pois', []) if poi.get('category') == 'viewpoints'])
-                print(f"[{datetime.now().strftime('%H:%M:%S')}] Regular route: {regular_viewpoints} viewpoints, Aggressive route: {aggressive_viewpoints} viewpoints")
-                print(f"[{datetime.now().strftime('%H:%M:%S')}] Regular route time: {selected_time:.1f}min, Aggressive route time: {aggressive_route.get('time_minutes', 0):.1f}min")
-                if aggressive_viewpoints > regular_viewpoints:
-                    print(f"[{datetime.now().strftime('%H:%M:%S')}] Aggressive route found more viewpoints! Using it.")
-                    return aggressive_route
-                else:
-                    print(f"[{datetime.now().strftime('%H:%M:%S')}] Aggressive route didn't improve viewpoint count, keeping regular route")
+        # Try aggressive routing for all high-priority POI preferences (not just viewpoints)
+        high_priority_categories = [cat for cat, score in poi_preferences.items() if score >= 15.0] if poi_preferences else []
+        
+        if high_priority_categories and target_time_minutes and selected_time < target_time_minutes * 0.8:
+            print(f"[{datetime.now().strftime('%H:%M:%S')}] Route too short for high-priority categories {high_priority_categories}, attempting aggressive POI routing...")
+            
+            # For viewpoint routes, use the specialized viewpoint algorithm
+            if 'viewpoints' in high_priority_categories and poi_preferences['viewpoints'] >= 20.0:
+                aggressive_route = self._find_aggressive_viewpoint_route(start_node, end_node, target_time_minutes, poi_preferences)
+                if aggressive_route:
+                    regular_viewpoints = len([poi for poi in route_pois if poi.get('category') == 'viewpoints'])
+                    aggressive_viewpoints = len([poi for poi in aggressive_route.get('detailed_pois', []) if poi.get('category') == 'viewpoints'])
+                    print(f"[{datetime.now().strftime('%H:%M:%S')}] Regular route: {regular_viewpoints} viewpoints, Aggressive route: {aggressive_viewpoints} viewpoints")
+                    print(f"[{datetime.now().strftime('%H:%M:%S')}] Regular route time: {selected_time:.1f}min, Aggressive route time: {aggressive_route.get('time_minutes', 0):.1f}min")
+                    if aggressive_viewpoints > regular_viewpoints:
+                        print(f"[{datetime.now().strftime('%H:%M:%S')}] Aggressive viewpoint route found more viewpoints! Using it.")
+                        return aggressive_route
+            
+            # For all other routes, use the generic aggressive POI routing
+            else:
+                aggressive_route = self._find_aggressive_poi_route(start_node, end_node, target_time_minutes, poi_preferences)
+                if aggressive_route:
+                    # Calculate preferred POI counts for comparison
+                    regular_preferred_pois = sum(1 for poi in route_pois 
+                                               if poi.get('category') in high_priority_categories)
+                    # Get total POI counts from the aggressive route, not just detailed_pois
+                    aggressive_poi_categories = aggressive_route.get('poi_categories', {})
+                    aggressive_preferred_pois = sum(aggressive_poi_categories.get(cat, 0) 
+                                                  for cat in high_priority_categories)
+                    
+                    # Debug: Show breakdown of POI counts
+                    print(f"[{datetime.now().strftime('%H:%M:%S')}] High-priority categories: {high_priority_categories}")
+                    print(f"[{datetime.now().strftime('%H:%M:%S')}] Regular route POI categories: {dict((cat, sum(1 for poi in route_pois if poi.get('category') == cat)) for cat in high_priority_categories)}")
+                    print(f"[{datetime.now().strftime('%H:%M:%S')}] Aggressive route POI categories: {dict((cat, aggressive_poi_categories.get(cat, 0)) for cat in high_priority_categories)}")
+                    print(f"[{datetime.now().strftime('%H:%M:%S')}] Regular route: {regular_preferred_pois} preferred POIs, Aggressive route: {aggressive_preferred_pois} preferred POIs")
+                    print(f"[{datetime.now().strftime('%H:%M:%S')}] Regular route time: {selected_time:.1f}min, Aggressive route time: {aggressive_route.get('time_minutes', 0):.1f}min")
+                    
+                    # Use aggressive route if it has more preferred POIs OR much better time utilization  
+                    time_improvement = aggressive_route.get('time_minutes', 0) / selected_time if selected_time > 0 else 1
+                    poi_improvement = aggressive_preferred_pois / regular_preferred_pois if regular_preferred_pois > 0 else 1
+                    
+                    # More lenient criteria: use aggressive route if it's significantly longer OR has more POIs
+                    if (aggressive_preferred_pois > regular_preferred_pois * 1.2 or  # 20% more POIs
+                        time_improvement > 1.4 or  # 40% longer time 
+                        (aggressive_preferred_pois >= regular_preferred_pois and time_improvement > 1.2)):  # Same POIs but 20% longer
+                        print(f"[{datetime.now().strftime('%H:%M:%S')}] Aggressive POI route is significantly better! Using it.")
+                        return aggressive_route
+                    else:
+                        print(f"[{datetime.now().strftime('%H:%M:%S')}] Aggressive POI route didn't provide significant improvement, keeping regular route")
         
         return self._format_route_result(selected_route, route_type, selected_time, selected_distance, route_pois)
     
@@ -450,6 +620,11 @@ class POIRoutingEngine:
                 
                 time_diff = abs(waypoint_time - target_time)
                 
+                # Check if route respects edge usage constraint (max 2 times per street)
+                if not self._validate_route_edge_usage(waypoint_route, max_edge_usage=2):
+                    print(f"[{datetime.now().strftime('%H:%M:%S')}] Waypoint route rejected: too much street repetition")
+                    continue
+                
                 # Prefer routes closer to target time
                 if time_diff < best_time_diff and waypoint_time > direct_time:
                     best_time_diff = time_diff
@@ -470,6 +645,332 @@ class POIRoutingEngine:
         """Aggressively seek viewpoints by building route through multiple viewpoints"""
         # Find all viewpoints within reasonable distance
         viewpoint_pois = []
+        ramberget_found = False
+        for poi in self.pois:
+            if 'lat' not in poi or 'lng' not in poi:
+                continue
+            category = self._categorize_poi(poi)
+            if category == 'viewpoints':
+                viewpoint_pois.append(poi)
+                poi_name = poi.get('attributes', {}).get('name', 'Unnamed')
+                if poi_name == 'Ramberget':
+                    ramberget_found = True
+                    print(f"[{datetime.now().strftime('%H:%M:%S')}] Found Ramberget in viewpoint POIs at ({poi['lat']}, {poi['lng']})")
+        
+        if not ramberget_found:
+            print(f"[{datetime.now().strftime('%H:%M:%S')}] WARNING: Ramberget not found in viewpoint POIs!")
+        
+        if not viewpoint_pois:
+            return None
+            
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] Found {len(viewpoint_pois)} total viewpoints")
+        
+        # Find nearest nodes for each viewpoint
+        viewpoint_nodes = []
+        ramberget_processed = False
+        for poi in viewpoint_pois:
+            poi_name = poi.get('attributes', {}).get('name', 'Unnamed')
+            try:
+                nearest_node = ox.distance.nearest_nodes(self.graph, X=poi['lng'], Y=poi['lat'], return_dist=False)
+                # Check if viewpoint is reachable
+                try:
+                    dist_from_start = nx.shortest_path_length(self.graph, start_node, nearest_node, weight='length')
+                    dist_to_end = nx.shortest_path_length(self.graph, nearest_node, end_node, weight='length')
+                    total_dist = dist_from_start + dist_to_end
+                    direct_dist = nx.shortest_path_length(self.graph, start_node, end_node, weight='length')
+                    
+                    detour_factor = total_dist / direct_dist
+                    
+                    if poi_name == 'Ramberget':
+                        ramberget_processed = True
+                        print(f"[{datetime.now().strftime('%H:%M:%S')}] Processing Ramberget: detour {detour_factor:.2f}x (threshold: 4.0x)")
+                    
+                    # Only consider viewpoints that don't make route impossibly long
+                    if total_dist <= direct_dist * 4.0:  # Allow up to 4x detour
+                        viewpoint_nodes.append({
+                            'node': nearest_node,
+                            'poi': poi,
+                            'detour_cost': total_dist - direct_dist,
+                            'total_dist': total_dist
+                        })
+                        if poi_name == 'Ramberget':
+                            print(f"[{datetime.now().strftime('%H:%M:%S')}] Ramberget ACCEPTED as reachable viewpoint")
+                    else:
+                        if poi_name == 'Ramberget':
+                            print(f"[{datetime.now().strftime('%H:%M:%S')}] Ramberget REJECTED: detour too large ({detour_factor:.2f}x > 4.0x)")
+                except nx.NetworkXNoPath:
+                    if poi_name == 'Ramberget':
+                        print(f"[{datetime.now().strftime('%H:%M:%S')}] Ramberget REJECTED: no path found")
+                    continue
+            except Exception as e:
+                if poi_name == 'Ramberget':
+                    print(f"[{datetime.now().strftime('%H:%M:%S')}] Ramberget REJECTED: exception {e}")
+                continue
+        
+        if not ramberget_processed:
+            print(f"[{datetime.now().strftime('%H:%M:%S')}] WARNING: Ramberget was not processed in reachability check!")
+        
+        if not viewpoint_nodes:
+            return None
+            
+        # Sort viewpoints by priority: named peaks/viewpoints first, then by detour cost
+        def viewpoint_priority(vp):
+            poi = vp['poi']
+            attrs = poi.get('attributes', {})
+            
+            # Highest priority: named peaks with elevation
+            if attrs.get('natural') == 'peak' and attrs.get('name') and attrs.get('ele'):
+                return (0, vp['detour_cost'])  # Sort group 0 by detour cost
+            
+            # High priority: named viewpoints  
+            if attrs.get('name') and attrs.get('name') != 'Unnamed':
+                return (1, vp['detour_cost'])  # Sort group 1 by detour cost
+            
+            # Medium priority: peaks without names
+            if attrs.get('natural') == 'peak':
+                return (2, vp['detour_cost'])  # Sort group 2 by detour cost
+            
+            # Low priority: unnamed viewpoints
+            return (3, vp['detour_cost'])  # Sort group 3 by detour cost
+        
+        viewpoint_nodes.sort(key=viewpoint_priority)
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] Sorted viewpoints by priority (named peaks first)")
+        
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] Found {len(viewpoint_nodes)} reachable viewpoints")
+        # Show details of viewpoints found, especially Ramberget
+        ramberget_in_top = False
+        for i, vp in enumerate(viewpoint_nodes[:10]):  # Show first 10
+            poi_name = vp['poi'].get('attributes', {}).get('name', 'Unnamed')
+            print(f"[{datetime.now().strftime('%H:%M:%S')}] Viewpoint {i+1}: {poi_name} at ({vp['poi']['lat']:.6f}, {vp['poi']['lng']:.6f}), detour: {vp['detour_cost']:.0f}m")
+            if poi_name == 'Ramberget':
+                ramberget_in_top = True
+                
+        # Find Ramberget's position in the full list
+        if not ramberget_in_top:
+            for i, vp in enumerate(viewpoint_nodes):
+                poi_name = vp['poi'].get('attributes', {}).get('name', 'Unnamed')
+                if poi_name == 'Ramberget':
+                    print(f"[{datetime.now().strftime('%H:%M:%S')}] FOUND Ramberget at position {i+1}/{len(viewpoint_nodes)}: detour {vp['detour_cost']:.0f}m")
+                    break
+        
+        # Try to build routes through multiple viewpoints
+        best_route = None
+        best_viewpoint_count = 0
+        
+        # Try different combinations of viewpoints (maximize viewpoints, no arbitrary limit)
+        for num_viewpoints in range(len(viewpoint_nodes), 0, -1):  # Try all viewpoints down to 1
+            for i in range(min(3, len(viewpoint_nodes) - num_viewpoints + 1)):  # Try 3 different starting positions
+                try:
+                    selected_viewpoints = viewpoint_nodes[i:i+num_viewpoints]
+                    
+                    # Build route through viewpoints
+                    route_segments = []
+                    current_node = start_node
+                    
+                    # Debug: Show planned viewpoints for this specific route attempt
+                    planned_names = [vp['poi'].get('attributes', {}).get('name', 'Unnamed') for vp in selected_viewpoints]
+                    print(f"[{datetime.now().strftime('%H:%M:%S')}] Building route through: {planned_names}")
+                    
+                    for vp in selected_viewpoints:
+                        segment = nx.shortest_path(self.graph, current_node, vp['node'], weight='poi_weight')
+                        if len(route_segments) > 0:
+                            segment = segment[1:]  # Remove duplicate node
+                        route_segments.extend(segment)
+                        current_node = vp['node']
+                        
+                        # Debug: Confirm viewpoint node is included
+                        vp_name = vp['poi'].get('attributes', {}).get('name', 'Unnamed')
+                        if vp_name == 'Ramberget':
+                            print(f"[{datetime.now().strftime('%H:%M:%S')}] Added Ramberget node {vp['node']} to route_segments (total: {len(route_segments)})")
+                            print(f"[{datetime.now().strftime('%H:%M:%S')}] Ramberget node in route_segments: {vp['node'] in route_segments}")
+                    
+                    # Add final segment to end
+                    final_segment = nx.shortest_path(self.graph, current_node, end_node, weight='poi_weight')
+                    if len(route_segments) > 0:
+                        final_segment = final_segment[1:]  # Remove duplicate node
+                    route_segments.extend(final_segment)
+                    
+                    # Calculate route metrics
+                    route_time = self.calculate_route_time(route_segments)
+                    route_distance = sum(self.graph[route_segments[j]][route_segments[j+1]].get('length', 0) 
+                                       for j in range(len(route_segments) - 1))
+                    
+                    # Check if route fits time constraints (allow some flexibility)
+                    if target_time and route_time > target_time * 1.6:  # Allow 60% over target for viewpoints (was 40%, now more flexible)
+                        planned_names = [vp['poi'].get('attributes', {}).get('name', 'Unnamed') for vp in selected_viewpoints]
+                        if 'Ramberget' in planned_names:
+                            print(f"[{datetime.now().strftime('%H:%M:%S')}] ⚠️  Route with Ramberget REJECTED: too long ({route_time:.1f}min > {target_time * 1.6:.1f}min)")
+                        continue
+                    
+                    # Check if route respects edge usage constraint (max 2 times per street)
+                    if not self._validate_route_edge_usage(route_segments, max_edge_usage=2):
+                        planned_names = [vp['poi'].get('attributes', {}).get('name', 'Unnamed') for vp in selected_viewpoints]
+                        if 'Ramberget' in planned_names:
+                            print(f"[{datetime.now().strftime('%H:%M:%S')}] ⚠️  Route with Ramberget REJECTED: too much street repetition")
+                        else:
+                            print(f"[{datetime.now().strftime('%H:%M:%S')}] Route rejected: too much street repetition")
+                        continue
+                    
+                    # Find POIs along this route (use larger radius for viewpoint detection)
+                    route_pois = self._find_pois_along_route(route_segments, radius=200.0)
+                    viewpoint_count = len([poi for poi in route_pois if poi.get('category') == 'viewpoints'])
+                    
+                    print(f"[{datetime.now().strftime('%H:%M:%S')}] Route with {num_viewpoints} planned viewpoints found {viewpoint_count} total viewpoints, {route_time:.1f}min")
+                    print(f"[{datetime.now().strftime('%H:%M:%S')}] route_pois has {len(route_pois)} total POIs, {len([poi for poi in route_pois if poi.get('category') == 'viewpoints'])} viewpoints")
+                    
+                    # Calculate route quality score (prioritize named peaks)
+                    named_peaks = len([poi for poi in route_pois if poi.get('category') == 'viewpoints' and 
+                                     poi.get('attributes', {}).get('natural') == 'peak' and 
+                                     poi.get('attributes', {}).get('name')])
+                    named_viewpoints = len([poi for poi in route_pois if poi.get('category') == 'viewpoints' and 
+                                          poi.get('attributes', {}).get('name') and 
+                                          poi.get('attributes', {}).get('name') != 'Unnamed'])
+                    
+                    # Route quality: named peaks worth 5 points, named viewpoints worth 2 points, unnamed worth 1 point
+                    route_quality = named_peaks * 5 + (named_viewpoints - named_peaks) * 2 + (viewpoint_count - named_viewpoints) * 1
+                    
+                    # Debug: Check if Ramberget is in the route POIs
+                    ramberget_in_route = any(poi.get('attributes', {}).get('name') == 'Ramberget' for poi in route_pois)
+                    print(f"[{datetime.now().strftime('%H:%M:%S')}] Route: {viewpoint_count} viewpoints, quality: {route_quality}, Ramberget: {ramberget_in_route}")
+                    if ramberget_in_route:
+                        planned_viewpoint_names = [vp['poi'].get('attributes', {}).get('name', 'Unnamed') for vp in viewpoint_nodes[:num_viewpoints]]
+                        print(f"[{datetime.now().strftime('%H:%M:%S')}] Planned viewpoints for this route: {planned_viewpoint_names}")
+                    else:
+                        # Check if Ramberget was supposed to be in this route
+                        planned_viewpoint_names = [vp['poi'].get('attributes', {}).get('name', 'Unnamed') for vp in viewpoint_nodes[:num_viewpoints]]
+                        if 'Ramberget' in planned_viewpoint_names:
+                            print(f"[{datetime.now().strftime('%H:%M:%S')}] ⚠️  PROBLEM: Ramberget was planned but not found in route!")
+                            print(f"[{datetime.now().strftime('%H:%M:%S')}] Planned: {planned_viewpoint_names}")
+                            # Check if Ramberget's node is in route_segments
+                            ramberget_node = None
+                            for vp in viewpoint_nodes[:num_viewpoints]:
+                                if vp['poi'].get('attributes', {}).get('name') == 'Ramberget':
+                                    ramberget_node = vp['node']
+                                    break
+                            if ramberget_node and ramberget_node in route_segments:
+                                print(f"[{datetime.now().strftime('%H:%M:%S')}] Ramberget node {ramberget_node} IS in route segments")
+                            elif ramberget_node:
+                                print(f"[{datetime.now().strftime('%H:%M:%S')}] Ramberget node {ramberget_node} NOT in route segments")
+                    
+                    best_quality = getattr(self, '_best_route_quality', 0)
+                    
+                    if route_quality > best_quality or (route_quality == best_quality and viewpoint_count > best_viewpoint_count):
+                        self._best_route_quality = route_quality
+                        best_viewpoint_count = viewpoint_count
+                        best_route = self._format_route_result(
+                            route_segments, 'aggressive_viewpoint', route_time, route_distance, route_pois
+                        )
+                        
+                        # Debug: Show which route became the best
+                        route_viewpoint_names = [poi.get('attributes', {}).get('name', 'Unnamed') for poi in route_pois if poi.get('category') == 'viewpoints']
+                        ramberget_in_best = 'Ramberget' in route_viewpoint_names
+                        print(f"[{datetime.now().strftime('%H:%M:%S')}] NEW BEST route (quality: {route_quality}, {viewpoint_count} viewpoints, {named_peaks} peaks): Ramberget: {ramberget_in_best}")
+                        if ramberget_in_best:
+                            print(f"[{datetime.now().strftime('%H:%M:%S')}] ✅ Best route includes Ramberget!")
+                        print(f"[{datetime.now().strftime('%H:%M:%S')}] Best route updated: {len(best_route.get('detailed_pois', []))} detailed_pois")
+                        
+                except (nx.NetworkXNoPath, IndexError, KeyError) as e:
+                    planned_names = [vp['poi'].get('attributes', {}).get('name', 'Unnamed') for vp in selected_viewpoints] if 'selected_viewpoints' in locals() else []
+                    if 'Ramberget' in planned_names:
+                        print(f"[{datetime.now().strftime('%H:%M:%S')}] ⚠️  Route with Ramberget FAILED: {type(e).__name__}: {e}")
+                    continue
+                    
+            if best_route:  # If we found a good route, don't try fewer viewpoints
+                break
+        
+        return best_route
+    
+    def _find_trail_with_waypoints(self, start_node: int, end_node: int, max_allowed_distance: float, 
+                                  poi_preferences: Dict[str, float]) -> Optional[Dict]:
+        """Find trail within distance constraints by adding strategic waypoints"""
+        direct_route = nx.shortest_path(self.graph, start_node, end_node, weight='length')
+        direct_distance = sum(self.graph[direct_route[i]][direct_route[i+1]].get('length', 0) 
+                            for i in range(len(direct_route) - 1))
+        
+        if direct_distance >= max_allowed_distance:
+            return None
+        
+        # Early exit if start == end (same node routes)
+        if start_node == end_node:
+            return None
+        
+        # Find midpoint of direct route
+        mid_idx = len(direct_route) // 2
+        mid_node = direct_route[mid_idx]
+        
+        # Optimize: Only check nodes within reasonable distance from midpoint
+        mid_node_data = self.graph.nodes[mid_node]
+        mid_lat, mid_lng = mid_node_data['y'], mid_node_data['x']
+        max_search_distance = min(800, (max_allowed_distance - direct_distance) / 2)  # Stay within deviation limit
+        
+        candidate_waypoints = []
+        nodes_checked = 0
+        max_nodes_to_check = 50  # Reduced for trail generation
+        
+        for node in self.graph.nodes():
+            if node == start_node or node == end_node:
+                continue
+            
+            # Quick distance filter
+            node_data = self.graph.nodes[node]
+            distance_to_mid = self._calculate_distance(mid_lat, mid_lng, node_data['y'], node_data['x'])
+            
+            if distance_to_mid > max_search_distance:
+                continue
+            
+            nodes_checked += 1
+            if nodes_checked > max_nodes_to_check:
+                break
+            
+            try:
+                detour_dist = (nx.shortest_path_length(self.graph, start_node, node, weight='length') +
+                              nx.shortest_path_length(self.graph, node, end_node, weight='length'))
+                
+                if detour_dist <= max_allowed_distance:
+                    # Calculate POI score for this node
+                    poi_score = self._calculate_node_poi_score(node, poi_preferences)
+                    if poi_score > 0:
+                        candidate_waypoints.append({
+                            'node': node,
+                            'detour_distance': detour_dist - direct_distance,
+                            'poi_score': poi_score,
+                            'total_distance': detour_dist
+                        })
+            except nx.NetworkXNoPath:
+                continue
+        
+        if not candidate_waypoints:
+            return None
+        
+        # Sort by POI score and select best waypoint within distance limit
+        candidate_waypoints.sort(key=lambda x: x['poi_score'], reverse=True)
+        
+        for waypoint in candidate_waypoints[:3]:  # Try top 3 candidates
+            try:
+                waypoint_route = (nx.shortest_path(self.graph, start_node, waypoint['node'], weight='poi_weight') +
+                                 nx.shortest_path(self.graph, waypoint['node'], end_node, weight='poi_weight')[1:])
+                
+                waypoint_time = self.calculate_route_time(waypoint_route)
+                waypoint_distance = sum(self.graph[waypoint_route[i]][waypoint_route[i+1]].get('length', 0) 
+                                      for i in range(len(waypoint_route) - 1))
+                
+                if waypoint_distance <= max_allowed_distance:
+                    return {
+                        'route': waypoint_route,
+                        'time': waypoint_time,
+                        'distance': waypoint_distance
+                    }
+                
+            except nx.NetworkXNoPath:
+                continue
+        
+        return None
+    
+    def _find_aggressive_viewpoint_trail(self, start_node: int, end_node: int, max_allowed_distance: float, 
+                                        poi_preferences: Dict[str, float]) -> Optional[Dict]:
+        """Aggressively seek viewpoints within distance constraints"""
+        # Find all viewpoints within reasonable distance
+        viewpoint_pois = []
         for poi in self.pois:
             if 'lat' not in poi or 'lng' not in poi:
                 continue
@@ -480,48 +981,56 @@ class POIRoutingEngine:
         if not viewpoint_pois:
             return None
             
-        print(f"[{datetime.now().strftime('%H:%M:%S')}] Found {len(viewpoint_pois)} total viewpoints")
-        
         # Find nearest nodes for each viewpoint
         viewpoint_nodes = []
         for poi in viewpoint_pois:
             try:
                 nearest_node = ox.distance.nearest_nodes(self.graph, X=poi['lng'], Y=poi['lat'], return_dist=False)
-                # Check if viewpoint is reachable
+                # Check if viewpoint is reachable within distance constraints
                 try:
                     dist_from_start = nx.shortest_path_length(self.graph, start_node, nearest_node, weight='length')
                     dist_to_end = nx.shortest_path_length(self.graph, nearest_node, end_node, weight='length')
                     total_dist = dist_from_start + dist_to_end
-                    direct_dist = nx.shortest_path_length(self.graph, start_node, end_node, weight='length')
                     
-                    # Only consider viewpoints that don't make route impossibly long
-                    if total_dist <= direct_dist * 4.0:  # Allow up to 4x detour
+                    # Only consider viewpoints that fit within deviation limit
+                    if total_dist <= max_allowed_distance:
                         viewpoint_nodes.append({
                             'node': nearest_node,
                             'poi': poi,
-                            'detour_cost': total_dist - direct_dist,
+                            'detour_cost': total_dist - nx.shortest_path_length(self.graph, start_node, end_node, weight='length'),
                             'total_dist': total_dist
                         })
                 except nx.NetworkXNoPath:
                     continue
-            except:
+            except Exception:
                 continue
         
         if not viewpoint_nodes:
             return None
             
-        # Sort viewpoints by detour cost (prefer closer ones)
-        viewpoint_nodes.sort(key=lambda x: x['detour_cost'])
+        # Sort viewpoints by priority: named peaks/viewpoints first, then by detour cost
+        def viewpoint_priority(vp):
+            poi = vp['poi']
+            attrs = poi.get('attributes', {})
+            
+            if attrs.get('natural') == 'peak' and attrs.get('name'):
+                return (0, vp['detour_cost'])
+            elif attrs.get('name') and attrs.get('name') != 'Unnamed':
+                return (1, vp['detour_cost'])
+            elif attrs.get('natural') == 'peak':
+                return (2, vp['detour_cost'])
+            else:
+                return (3, vp['detour_cost'])
         
-        print(f"[{datetime.now().strftime('%H:%M:%S')}] Found {len(viewpoint_nodes)} reachable viewpoints")
+        viewpoint_nodes.sort(key=viewpoint_priority)
         
-        # Try to build routes through multiple viewpoints
+        # Try to build routes through multiple viewpoints within distance limit
         best_route = None
         best_viewpoint_count = 0
         
-        # Try different combinations of viewpoints
-        for num_viewpoints in range(min(6, len(viewpoint_nodes)), 0, -1):  # Try 6 down to 1 viewpoint
-            for i in range(min(3, len(viewpoint_nodes) - num_viewpoints + 1)):  # Try 3 different starting positions
+        # Try different combinations, starting with fewer viewpoints for distance constraints
+        for num_viewpoints in range(min(3, len(viewpoint_nodes)), 0, -1):
+            for i in range(min(2, len(viewpoint_nodes) - num_viewpoints + 1)):
                 try:
                     selected_viewpoints = viewpoint_nodes[i:i+num_viewpoints]
                     
@@ -547,28 +1056,171 @@ class POIRoutingEngine:
                     route_distance = sum(self.graph[route_segments[j]][route_segments[j+1]].get('length', 0) 
                                        for j in range(len(route_segments) - 1))
                     
-                    # Check if route fits time constraints (allow some flexibility)
-                    if target_time and route_time > target_time * 1.6:  # Allow 60% over target for viewpoints (was 40%, now more flexible)
+                    # Check if route fits distance constraints
+                    if route_distance > max_allowed_distance:
                         continue
                     
                     # Find POIs along this route
-                    route_pois = self._find_pois_along_route(route_segments)
+                    route_pois = self._find_pois_along_route(route_segments, radius=200.0)
                     viewpoint_count = len([poi for poi in route_pois if poi.get('category') == 'viewpoints'])
-                    
-                    print(f"[{datetime.now().strftime('%H:%M:%S')}] Route with {num_viewpoints} planned viewpoints found {viewpoint_count} total viewpoints, {route_time:.1f}min")
-                    print(f"[{datetime.now().strftime('%H:%M:%S')}] route_pois has {len(route_pois)} total POIs, {len([poi for poi in route_pois if poi.get('category') == 'viewpoints'])} viewpoints")
                     
                     if viewpoint_count > best_viewpoint_count:
                         best_viewpoint_count = viewpoint_count
                         best_route = self._format_route_result(
-                            route_segments, 'aggressive_viewpoint', route_time, route_distance, route_pois
+                            route_segments, 'aggressive_viewpoint_trail', route_time, route_distance, route_pois
                         )
-                        print(f"[{datetime.now().strftime('%H:%M:%S')}] Best route updated: {len(best_route.get('detailed_pois', []))} detailed_pois")
                         
                 except (nx.NetworkXNoPath, IndexError, KeyError):
                     continue
                     
             if best_route:  # If we found a good route, don't try fewer viewpoints
+                break
+        
+        return best_route
+    
+    def _find_aggressive_poi_route(self, start_node: int, end_node: int, target_time: float, 
+                                  poi_preferences: Dict[str, float]) -> Optional[Dict]:
+        """Aggressively seek POIs by building route through multiple high-priority POIs"""
+        # Find all POIs matching the preferred categories
+        category_pois = []
+        for poi in self.pois:
+            if 'lat' not in poi or 'lng' not in poi:
+                continue
+            category = self._categorize_poi(poi)
+            if category and category in poi_preferences and poi_preferences[category] >= 10.0:  # Only high-priority categories
+                category_pois.append(poi)
+        
+        if not category_pois:
+            return None
+            
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] Found {len(category_pois)} high-priority POIs for aggressive routing")
+        
+        # Find nearest nodes for each POI
+        poi_nodes = []
+        for poi in category_pois:
+            poi_name = poi.get('attributes', {}).get('name', 'Unnamed')
+            try:
+                nearest_node = ox.distance.nearest_nodes(self.graph, X=poi['lng'], Y=poi['lat'], return_dist=False)
+                # Check if POI is reachable
+                try:
+                    dist_from_start = nx.shortest_path_length(self.graph, start_node, nearest_node, weight='length')
+                    dist_to_end = nx.shortest_path_length(self.graph, nearest_node, end_node, weight='length')
+                    total_dist = dist_from_start + dist_to_end
+                    direct_dist = nx.shortest_path_length(self.graph, start_node, end_node, weight='length')
+                    
+                    detour_factor = total_dist / direct_dist
+                    
+                    # Allow up to 4x detour for aggressive routing (reduced from 6x for performance)
+                    if total_dist <= direct_dist * 4.0:
+                        category = self._categorize_poi(poi)
+                        preference_score = poi_preferences.get(category, 0)
+                        
+                        poi_nodes.append({
+                            'node': nearest_node,
+                            'poi': poi,
+                            'category': category,
+                            'preference_score': preference_score,
+                            'detour_cost': total_dist - direct_dist,
+                            'total_dist': total_dist,
+                            'name': poi_name
+                        })
+                except nx.NetworkXNoPath:
+                    continue
+            except Exception as e:
+                continue
+        
+        if not poi_nodes:
+            return None
+            
+        # Sort POIs by preference score and detour cost
+        def poi_priority(poi_node):
+            # Priority: preference score (higher first), then lower detour cost
+            return (-poi_node['preference_score'], poi_node['detour_cost'])
+        
+        poi_nodes.sort(key=poi_priority)
+        
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] Found {len(poi_nodes)} reachable high-priority POIs")
+        
+        # Show top POIs for debugging
+        for i, pn in enumerate(poi_nodes[:10]):
+            print(f"[{datetime.now().strftime('%H:%M:%S')}] POI {i+1}: {pn['name']} ({pn['category']}) - score: {pn['preference_score']}, detour: {pn['detour_cost']:.0f}m")
+        
+        # Try to build routes through multiple POIs (maximize POIs, respect time constraints)
+        best_route = None
+        best_poi_count = 0
+        best_quality_score = 0
+        
+        # Try different combinations of POIs (start with more POIs, work down)
+        for num_pois in range(min(len(poi_nodes), 8), 0, -1):  # Try up to 8 POIs maximum (reduced from 15)
+            for i in range(min(2, len(poi_nodes) - num_pois + 1)):  # Try 2 different starting positions (reduced from 3)
+                try:
+                    selected_pois = poi_nodes[i:i+num_pois]
+                    
+                    # Build route through POIs
+                    route_segments = []
+                    current_node = start_node
+                    
+                    planned_names = [pn['name'] for pn in selected_pois]
+                    print(f"[{datetime.now().strftime('%H:%M:%S')}] Building aggressive route through {num_pois} POIs: {planned_names[:5]}{'...' if len(planned_names) > 5 else ''}")
+                    
+                    for pn in selected_pois:
+                        segment = nx.shortest_path(self.graph, current_node, pn['node'], weight='poi_weight')
+                        if len(route_segments) > 0:
+                            segment = segment[1:]  # Remove duplicate node
+                        route_segments.extend(segment)
+                        current_node = pn['node']
+                    
+                    # Add final segment to end
+                    final_segment = nx.shortest_path(self.graph, current_node, end_node, weight='poi_weight')
+                    if len(route_segments) > 0:
+                        final_segment = final_segment[1:]  # Remove duplicate node
+                    route_segments.extend(final_segment)
+                    
+                    # Calculate route metrics
+                    route_time = self.calculate_route_time(route_segments)
+                    route_distance = sum(self.graph[route_segments[j]][route_segments[j+1]].get('length', 0) 
+                                       for j in range(len(route_segments) - 1))
+                    
+                    # Check if route fits time constraints (allow up to 1.8x target time for aggressive routes)
+                    if target_time and route_time > target_time * 1.8:
+                        continue
+                    
+                    # Check if route respects edge usage constraint (max 2 times per street)
+                    if not self._validate_route_edge_usage(route_segments, max_edge_usage=2):
+                        print(f"[{datetime.now().strftime('%H:%M:%S')}] Route rejected: too much street repetition")
+                        continue
+                    
+                    # Find POIs along this route (use larger radius for POI detection)
+                    route_pois = self._find_pois_along_route(route_segments, radius=150.0)
+                    
+                    # Calculate route quality based on POI categories and preferences
+                    quality_score = 0
+                    category_counts = {}
+                    for poi in route_pois:
+                        category = poi.get('category')
+                        if category and category in poi_preferences:
+                            preference_value = poi_preferences[category]
+                            quality_score += preference_value
+                            category_counts[category] = category_counts.get(category, 0) + 1
+                    
+                    total_preferred_pois = sum(category_counts.values())
+                    
+                    print(f"[{datetime.now().strftime('%H:%M:%S')}] Route with {num_pois} planned POIs found {total_preferred_pois} preferred POIs, {route_time:.1f}min, quality: {quality_score:.1f}")
+                    
+                    # Select best route based on quality score and POI count
+                    if quality_score > best_quality_score or (quality_score == best_quality_score and total_preferred_pois > best_poi_count):
+                        best_quality_score = quality_score
+                        best_poi_count = total_preferred_pois
+                        best_route = self._format_route_result(
+                            route_segments, 'aggressive_poi', route_time, route_distance, route_pois
+                        )
+                        
+                        print(f"[{datetime.now().strftime('%H:%M:%S')}] NEW BEST aggressive route (quality: {quality_score:.1f}, {total_preferred_pois} POIs)")
+                        
+                except (nx.NetworkXNoPath, IndexError, KeyError) as e:
+                    continue
+                    
+            if best_route:  # If we found a good route, don't try fewer POIs
                 break
         
         return best_route
@@ -628,6 +1280,11 @@ class POIRoutingEngine:
         for poi in pois:
             poi_summary[poi['category']] += 1
         
+        # Prioritize viewpoints in detailed POIs
+        viewpoints = [poi for poi in pois if poi.get('category') == 'viewpoints']
+        other_pois = [poi for poi in pois if poi.get('category') != 'viewpoints']
+        detailed_pois = viewpoints + other_pois[:max(0, 20 - len(viewpoints))]
+        
         return {
             'route_type': route_type,
             'coordinates': coordinates,
@@ -637,7 +1294,7 @@ class POIRoutingEngine:
             'waypoints': len(route),
             'pois_along_route': len(pois),
             'poi_categories': dict(poi_summary),
-            'detailed_pois': pois[:20],  # Limit for brevity
+            'detailed_pois': detailed_pois,  # Prioritize viewpoints
             'metadata': {
                 'generated_at': datetime.now().isoformat(),
                 'algorithm': 'poi_weighted_shortest_path'
@@ -824,8 +1481,10 @@ def generate_timed_routes(osm_file: str, target_time_minutes: int = 120):
         start_lat=start_lat, start_lng=start_lng,
         end_lat=end_lat, end_lng=end_lng,
         poi_preferences={
-            'restaurants': 5.0,
-            'cafes': 2.0
+            'restaurants': 25.0,   # Significantly increased to maximize route time
+            'cafes': 15.0,         # Increased to find more cafes
+            'bars_pubs': 8.0,      # Added to include nightlife options
+            'fast_food': 5.0       # Added for more food variety
         },
         target_time_minutes=target_time_minutes
     )
@@ -841,9 +1500,12 @@ def generate_timed_routes(osm_file: str, target_time_minutes: int = 120):
         start_lat=start_lat, start_lng=start_lng,
         end_lat=end_lat, end_lng=end_lng,
         poi_preferences={
-            'tourism': 5.0,
-            'education': 2.0,
-            'restaurants': 1.5
+            'tourism': 25.0,       # Significantly increased to maximize route time
+            'education': 15.0,     # Increased for cultural sites
+            'restaurants': 8.0,    # Increased for meal stops
+            'cafes': 5.0,          # Added for cultural café visits 
+            'viewpoints': 10.0,    # Added for scenic cultural sites
+            'nature': 3.0          # Added for parks and cultural gardens
         },
         target_time_minutes=target_time_minutes
     )
@@ -859,9 +1521,12 @@ def generate_timed_routes(osm_file: str, target_time_minutes: int = 120):
         start_lat=start_lat, start_lng=start_lng,
         end_lat=end_lat, end_lng=end_lng,
         poi_preferences={
-            'shops': 4.0,
-            'restaurants': 1.5,
-            'cafes': 1.0
+            'shops': 25.0,         # Significantly increased to maximize route time
+            'restaurants': 12.0,   # Increased for shopping breaks
+            'cafes': 8.0,          # Increased for coffee breaks while shopping
+            'bars_pubs': 5.0,      # Added for after-shopping drinks
+            'tourism': 3.0,        # Added for shopping areas near attractions
+            'transport': 2.0       # Added for public transport convenience
         },
         target_time_minutes=target_time_minutes
     )
@@ -877,9 +1542,12 @@ def generate_timed_routes(osm_file: str, target_time_minutes: int = 120):
         start_lat=start_lat, start_lng=start_lng,
         end_lat=end_lat, end_lng=end_lng,
         poi_preferences={
-            'bars_pubs': 5.0,
-            'restaurants': 2.0,
-            'fast_food': 1.0
+            'bars_pubs': 30.0,     # Significantly increased to maximize route time
+            'restaurants': 15.0,   # Increased for dinner options
+            'fast_food': 8.0,      # Increased for late-night eats
+            'cafes': 5.0,          # Added for pre-nightlife coffee
+            'tourism': 3.0,        # Added for nightlife near attractions
+            'shops': 2.0           # Added for areas with mixed nightlife/shopping
         },
         target_time_minutes=target_time_minutes
     )
