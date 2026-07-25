@@ -40,6 +40,7 @@ export default function RouteComparison({ routes }: RouteComparisonProps) {
               <span className="text-yellow-400">
                 {route.name}
                 {route.name === 'PARK_HUNTER' && <span className="ml-1">🌲</span>}
+                {route.name === 'SHOPPING' && <span className="ml-1">🛍️</span>}
               </span>
               <span>TIME: {formatTime(route.stats.estimated_time)} | DIST: {formatDistance(route.stats.distance)}</span>
               <span className="text-orange-400">FUN: {route.stats.fun_score.toFixed(2)}</span>
@@ -225,6 +226,8 @@ export default function RouteComparison({ routes }: RouteComparisonProps) {
                     Best for: {
                       route.priority === 'speed' ? 'Getting there quickly' :
                       route.priority === 'fun' ? 'Scenic walks and interesting paths' :
+                      route.priority === 'shopping' ? 'Shopping streets, markets, and cafés' :
+                      route.priority === 'park' ? 'Nature, parks, and waterfronts' :
                       'Balance of speed and enjoyment'
                     }
                   </p>

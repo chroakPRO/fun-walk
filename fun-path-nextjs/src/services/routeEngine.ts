@@ -1,12 +1,17 @@
-import { Coordinate, Route } from '@/types/route';
+import { Coordinate, Route, RouteType } from '@/types/route';
 
 export class RouteEngine {
-  static async calculateMultipleRoutes(start: Coordinate, end: Coordinate): Promise<Route[]> {
+  static async calculateMultipleRoutes(
+    start: Coordinate,
+    end: Coordinate,
+    routeType: RouteType = 'scenic'
+  ): Promise<Route[]> {
     console.log('RouteEngine: Calling Python FastAPI backend from', start, 'to', end);
+    const backendUrl = (process.env.ROUTING_API_URL || 'http://localhost:8000').replace(/\/$/, '');
     
     try {
       // Call the Python FastAPI backend
-      const response = await fetch('http://localhost:8000/api/routes', {
+      const response = await fetch(`${backendUrl}/api/routes`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -14,13 +19,15 @@ export class RouteEngine {
         body: JSON.stringify({
           start: { lat: start.lat, lng: start.lng },
           end: { lat: end.lat, lng: end.lng },
-          buffer_dist: 3000
+          buffer_dist: 3000,
+          route_type: routeType
         }),
-        signal: AbortSignal.timeout(30000) // 30 second timeout
+        signal: AbortSignal.timeout(120000)
       });
 
       if (!response.ok) {
-        throw new Error(`Python API error: ${response.status}`);
+        const errorBody = await response.text();
+        throw new Error(`Python API error ${response.status}: ${errorBody || response.statusText}`);
       }
 
       const data = await response.json();
@@ -36,9 +43,9 @@ export class RouteEngine {
         name: string;
         description: string;
         route: Array<{lat: number; lng: number}>;  // Backend now sends 'route', not 'coordinates'
-        stats: Record<string, unknown>;
+        stats: Route['stats'];
         color: string;
-        priority: string;
+        priority: Route['priority'];
       }) => ({
         name: route.name,
         description: route.description,
@@ -52,75 +59,8 @@ export class RouteEngine {
 
     } catch (error) {
       console.error('Python API error:', error);
-      
-      // Fallback to simple direct route
-      return this.createFallbackRoutes(start, end);
+      const message = error instanceof Error ? error.message : 'Unknown routing backend error';
+      throw new Error(`Routing backend unavailable; refusing to return an invalid straight-line route: ${message}`);
     }
-  }
-
-
-
-
-
-  private static createFallbackRoutes(start: Coordinate, end: Coordinate): Route[] {
-    // Create simple fallback routes when API fails
-    const directRoute: Coordinate[] = [start, end];
-    
-    const distance = this.calculateDistance(start, end) * 1000; // Convert to meters
-    const estimatedTime = distance / 1000 * (60 / 4.2); // Walking speed 4.2 km/h
-    
-    const baseStats = {
-      distance,
-      fun_weight: distance,
-      fun_score: 1.0,
-      estimated_time: estimatedTime,
-      waypoints: 2,
-      path_types: {
-        other: {
-          distance,
-          time: estimatedTime,
-          speed: 4.2,
-          description: 'Direct route (limited data)'
-        }
-      },
-      surface_types: {
-        unknown: {
-          distance,
-          time: estimatedTime,
-          speed_modifier: 1.0,
-          description: 'Unknown surface'
-        }
-      },
-      special_areas: {},
-      segments: [],
-      avg_speed: 4.2
-    };
-
-    return [
-      {
-        name: 'DIRECT',
-        description: 'Direct route (limited OSM data)',
-        route: directRoute,
-        stats: baseStats,
-        color: '#888888',
-        priority: 'speed'
-      }
-    ];
-  }
-
-  private static calculateDistance(start: Coordinate, end: Coordinate): number {
-    // Haversine formula for distance calculation
-    const R = 6371; // Earth's radius in km
-    const dLat = this.toRad(end.lat - start.lat);
-    const dLng = this.toRad(end.lng - start.lng);
-    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-              Math.cos(this.toRad(start.lat)) * Math.cos(this.toRad(end.lat)) *
-              Math.sin(dLng/2) * Math.sin(dLng/2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    return R * c;
-  }
-
-  private static toRad(degrees: number): number {
-    return degrees * (Math.PI / 180);
   }
 }

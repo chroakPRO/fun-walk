@@ -4,3 +4,5 @@ osmnx==1.6.0
 networkx==3.2.1
 pydantic==2.5.0
 folium==0.15.0
+Pillow==11.3.0
+rasterio==1.5.0

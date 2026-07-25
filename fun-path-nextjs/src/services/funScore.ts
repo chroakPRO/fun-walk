@@ -222,7 +222,8 @@ export class FunScoreCalculator {
       surface_types: surfaceTypes,
       special_areas: specialAreas,
       segments: [], // Could be populated with detailed segment data
-      avg_speed: (distance / 1000) / (duration / 3600) // km/h
+      avg_speed: (distance / 1000) / (duration / 3600), // km/h
+      node_type_distribution: {}
     };
   }
 

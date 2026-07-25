@@ -277,6 +277,57 @@ export class OSMRoutingEngine {
     };
   }
 
+  private static detectAndReclassifyAdjacentPaths(ways: OSMWay[], nodes: Map<string, OSMNode>): void {
+    const vehicleHighways = new Set([
+      'residential',
+      'service',
+      'unclassified',
+      'tertiary',
+      'secondary',
+      'primary'
+    ]);
+    const roadNodeIds = new Set<string>();
+
+    for (const way of ways) {
+      if (vehicleHighways.has(way.tags.highway)) {
+        way.nodes.forEach(nodeId => roadNodeIds.add(nodeId));
+      }
+    }
+
+    if (roadNodeIds.size === 0) {
+      return;
+    }
+
+    const roadNodes = Array.from(roadNodeIds)
+      .map(nodeId => nodes.get(nodeId))
+      .filter((node): node is OSMNode => Boolean(node));
+
+    for (const way of ways) {
+      if (way.tags.highway !== 'path') {
+        continue;
+      }
+
+      const sharesRoadNode = way.nodes.some(nodeId => roadNodeIds.has(nodeId));
+      const isNearRoadNode = !sharesRoadNode && way.nodes.some(nodeId => {
+        const node = nodes.get(nodeId);
+        if (!node) return false;
+
+        return roadNodes.some(roadNode =>
+          this.calculateDistance(
+            { lat: node.lat, lng: node.lng },
+            { lat: roadNode.lat, lng: roadNode.lng }
+          ) <= 8
+        );
+      });
+
+      if (sharesRoadNode || isNearRoadNode) {
+        way.tags.highway = 'footway';
+        way.tags.footway = 'sidewalk';
+        way.tags.reclassified = 'road_adjacent_path';
+      }
+    }
+  }
+
   private static calculateFunWeight(way: OSMWay, length: number): number {
     let score = 1.0;
     const highway = way.tags.highway;

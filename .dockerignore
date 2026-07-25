@@ -1,0 +1,13 @@
+.git
+.env
+.venv
+__pycache__
+*.pyc
+.pytest_cache
+.ruff_cache
+cache
+data/nmd
+fun-path-nextjs/node_modules
+fun-path-nextjs/.next
+fun-path-nextjs/out
+fun-path-nextjs/.turbo

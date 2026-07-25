@@ -19,9 +19,18 @@ interface RouteMapProps {
   start: Coordinate;
   end: Coordinate;
   className?: string;
+  pickingDestination?: boolean;
+  onDestinationSelect?: (coordinate: Coordinate) => void;
 }
 
-export default function RouteMap({ routes, start, end, className = '' }: RouteMapProps) {
+export default function RouteMap({
+  routes,
+  start,
+  end,
+  className = '',
+  pickingDestination = false,
+  onDestinationSelect,
+}: RouteMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
 
@@ -31,6 +40,12 @@ export default function RouteMap({ routes, start, end, className = '' }: RouteMa
     // Initialize map
     const map = L.map(mapRef.current).setView([start.lat, start.lng], 14);
     mapInstanceRef.current = map;
+
+    map.on('click', (event: L.LeafletMouseEvent) => {
+      if (pickingDestination && onDestinationSelect) {
+        onDestinationSelect({ lat: event.latlng.lat, lng: event.latlng.lng });
+      }
+    });
 
     // Add tile layer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -136,13 +151,19 @@ export default function RouteMap({ routes, start, end, className = '' }: RouteMa
       `);
     });
 
-    // Fit map to show all routes
+    // Fit map to show the route, or both selected points before a route exists.
     if (routes.length > 0) {
       const allCoords = routes.flatMap(route => 
         route.route.map(coord => [coord.lat, coord.lng] as [number, number])
       );
       const bounds = L.latLngBounds(allCoords);
       map.fitBounds(bounds, { padding: [20, 20] });
+    } else {
+      const bounds = L.latLngBounds([
+        [start.lat, start.lng],
+        [end.lat, end.lng],
+      ]);
+      map.fitBounds(bounds, { padding: [55, 55], maxZoom: 14 });
     }
 
     return () => {
@@ -151,12 +172,13 @@ export default function RouteMap({ routes, start, end, className = '' }: RouteMa
         mapInstanceRef.current = null;
       }
     };
-  }, [routes, start, end]);
+  }, [routes, start, end, pickingDestination, onDestinationSelect]);
 
   return (
     <div 
       ref={mapRef} 
       className={`w-full h-full min-h-[400px] rounded-lg overflow-hidden ${className}`}
+      aria-label={pickingDestination ? 'Click map to choose destination' : 'Route map'}
     />
   );
 }

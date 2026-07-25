@@ -3,6 +3,8 @@ export interface Coordinate {
   lng: number;
 }
 
+export type RouteType = 'fastest' | 'balanced' | 'scenic' | 'nature' | 'shopping' | 'all';
+
 export interface PathTypeStats {
   distance: number;
   time: number;
@@ -42,6 +44,7 @@ export interface RouteStats {
   path_types: { [key: string]: PathTypeStats };
   surface_types: { [key: string]: SurfaceTypeStats };
   special_areas: { [key: string]: SpecialAreaStats };
+  segments: RouteSegment[];
   avg_speed: number;
   node_type_distribution: { [key: string]: number };
 }
@@ -52,13 +55,14 @@ export interface Route {
   route: Coordinate[];
   stats: RouteStats;
   color: string;
-  priority: 'speed' | 'fun' | 'balanced' | 'park';
+  priority: 'speed' | 'fun' | 'balanced' | 'park' | 'shopping';
 }
 
 export interface RouteRequest {
   start: Coordinate;
   end: Coordinate;
   buffer_dist?: number;
+  route_type?: RouteType;
 }
 
 export interface RouteResponse {

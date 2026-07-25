@@ -16,7 +16,11 @@ export async function POST(request: NextRequest) {
     console.log('Calculating routes for:', body.start, 'to', body.end);
 
     // Use the real routing engine
-    const routes = await RouteEngine.calculateMultipleRoutes(body.start, body.end);
+    const routes = await RouteEngine.calculateMultipleRoutes(
+      body.start,
+      body.end,
+      body.route_type || 'scenic'
+    );
     
     const response: RouteResponse = {
       routes,

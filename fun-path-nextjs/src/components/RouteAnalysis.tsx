@@ -211,6 +211,8 @@ export default function RouteAnalysis({ route }: RouteAnalysisProps) {
                 <p className="text-sm text-muted-foreground">
                   {route.priority === 'speed' ? 'Getting there quickly with minimal detours' :
                    route.priority === 'fun' ? 'Scenic walks with interesting paths and natural areas' :
+                   route.priority === 'shopping' ? 'Browsing shops, markets, cafés, and lively pedestrian streets' :
+                   route.priority === 'park' ? 'Parks, waterfronts, forests, and green spaces' :
                    'A good balance between efficiency and enjoyment'}
                 </p>
               </div>
