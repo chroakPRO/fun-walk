@@ -128,25 +128,54 @@ when the source layer or sampling method changes.
 
 ### Eye-level vegetation from NMD
 
-For stronger screening estimates, download Naturvårdsverket's NMD 2023
-`Objekthöjd/objekttäckning` ZIP archive. It is roughly 4.4 GB, so the app does
-not download it automatically. Import only the two coverage rasters the scorer
-needs:
+For stronger screening estimates in Sweden, download Naturvårdsverket's NMD
+2023 `Objekthöjd/objekttäckning` archive:
+
+- [Official NMD download page](https://www.naturvardsverket.se/verktyg-och-tjanster/kartor-och-karttjanster/nationella-marktackedata/ladda-ner-nationella-marktackedata/)
+- [Direct download: NMD 2023 object height/object coverage v1.1 ZIP (about 4.4 GB)](https://geodata.naturvardsverket.se/nedladdning/marktacke/NMD2023/Tillaggsskikt/NMD2023_Tillaggsskikt_Objekthojd_objekttackning_v1_1.zip)
+
+The repository does not download or commit this archive because of its size.
+After downloading it, run the importer from the repository root:
 
 ```bash
 python scripts/import_nmd_vegetation.py ~/Downloads/NMD2023_Tillaggsskikt_Objekthojd_objekttackning_v1_1.zip
 ```
 
-The importer writes `data/nmd/low_vegetation_coverage.tif` (objects 0.5–5 m)
-and `data/nmd/tall_vegetation_coverage.tif` (objects 5–45 m). The API detects
-them automatically and stores sampled results in
-`cache/vegetation_structure.sqlite3`. NMD files and caches are excluded from
-Git and Docker images; Compose mounts the local NMD directory read-only into
-the backend. Set `NMD_LOW_VEGETATION_RASTER` and
-`NMD_TALL_VEGETATION_RASTER` if the files live elsewhere.
+The importer extracts only the two rasters used by the scorer and gives them
+the filenames expected by the backend:
 
-If disk space is limited, add `--low-only`. The low layer contains the primary
-eye-level screening signal and works without the optional tall layer.
+```text
+fun-path/
+└── data/
+    └── nmd/
+        ├── low_vegetation_coverage.tif
+        └── tall_vegetation_coverage.tif
+```
+
+`low_vegetation_coverage.tif` contains coverage for objects 0.5–5 m tall and
+provides the primary eye-level screening signal. The 5–45 m
+`tall_vegetation_coverage.tif` layer is optional. To save disk space, import
+only the required low layer:
+
+```bash
+python scripts/import_nmd_vegetation.py --low-only ~/Downloads/NMD2023_Tillaggsskikt_Objekthojd_objekttackning_v1_1.zip
+```
+
+For a manual installation, extract the archive, find the GeoTIFFs whose names
+contain `Objekt_tackning_hojdintervall_0_5_till_5` and
+`Objekt_tackning_hojdintervall_5_till_45`, then copy them to `data/nmd/` and
+rename them to the filenames shown above.
+
+The API detects the files on the next search and stores calculated samples in
+`cache/vegetation_structure.sqlite3`. Both `data/nmd/` and `cache/` are
+excluded from Git. Docker Compose mounts `./data/nmd` read-only at the same
+location in the backend container, so no additional Docker configuration is
+needed.
+
+For a local non-Docker backend, files may instead live elsewhere by setting
+`NMD_DATA_DIR` to the directory containing the two expected filenames, or by
+setting `NMD_LOW_VEGETATION_RASTER` and `NMD_TALL_VEGETATION_RASTER` to their
+individual paths.
 
 ## Verification
 
